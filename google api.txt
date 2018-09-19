@@ -1,0 +1,14 @@
+
+Esta chave de API pode ser usada neste projeto e com qualquer API compatível com ela. Para usar essa chave no seu aplicativo, transfira-a com o parâmetro key=API_KEY .
+
+Chave de API
+AIzaSyD3l53FjrBqrhKzyspuy-ZWrtPOOnacWeo
+
+
+Id do cliente
+260803640273-th9nmrin95f33ag08s6esa2tne320uai.apps.googleusercontent.com
+
+
+Chave secreta
+
+_SPJy0C4EbxBmcOAG2N8hhPP

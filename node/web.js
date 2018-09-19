@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var passport = require('passport');
 var handlebars  = require('express-handlebars'), hbs;
 var app = express();
  
@@ -26,6 +27,8 @@ http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
+const _passport = require('./config/passport')(passport);
+app.use(passport.initialize());
 // send app to router
-require('./router')(app);
+require('./router')(app, passport);
 

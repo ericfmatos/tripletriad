@@ -11,3 +11,11 @@ exports.Other = function(request, response){
 
     response.render('home/Other');
 };
+
+
+exports.Profile = function(request, response){
+    response.pageInfo = {};
+    response.pageInfo.title = 'Outro';
+
+    response.render('home/Other');
+};

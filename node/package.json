@@ -1,9 +1,12 @@
 {
-    "name": "MVC-Express-Application",
-    "description": "An Express.js application using the MVC design pattern...",
+    "name": "tripleTriad",
+    "description": "It is Triple Triad",
     "version": "0.0.1",
     "dependencies": {
         "express": "4.4.4",
-        "express-handlebars": "1.1.0"
+        "express-handlebars": "1.1.0",
+        "googleapis": "*",
+        "passport": "*",
+        "passport-google-oauth": "*"
     }
 }
