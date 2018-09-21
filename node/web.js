@@ -10,6 +10,18 @@ app.set('views', path.join(__dirname, 'views'));
  
 var viewsDir =  path.join(__dirname, 'views');
 
+var session = require('express-session');
+
+// required for passport session
+app.use(session({
+  secret: 'N4qu&14$',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }
+}));
+
+
+
 const publicPath = path.join(__dirname, '../views');
 
 hbs = handlebars.create({
@@ -29,6 +41,7 @@ http.createServer(app).listen(app.get('port'), function(){
 
 const _passport = require('./config/passport')(passport);
 app.use(passport.initialize());
+app.use(passport.session());
 // send app to router
 require('./router')(app, passport);
 
