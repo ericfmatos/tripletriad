@@ -27,6 +27,28 @@ exports.Profile = function(request, response){
     }
 };
 
+exports.SaveUser = function(request, response) {
+
+    var curUser = request.session.passport.user;
+    var newUser = request.body;
+
+    for (var key in newUser) {
+        curUser[key] = newUser[key];
+    }
+
+    var dbUser = require('../db/user/user');
+    dbUser.saveUser(curUser, 
+        err => response.err(err),
+        data => { 
+            request.session.passport.user = data;
+            response.redirect('/profile');
+        }
+        );  
+
+    
+   
+}
+
 
 exports.Home = function(request, response) {
     response.render('home/Other');

@@ -26,11 +26,7 @@ module.exports = function(app, passport){
     });
 
 
-    app.post('/create_user', function(req, res){
-        console.log(req.user);
-        console.log(req.body);
-        res.redirect('/profile');
-    });
+    app.post('/create_user', isLoggedIn, HomeController.SaveUser);
 
    // =====================================
     // GOOGLE ROUTES =======================
