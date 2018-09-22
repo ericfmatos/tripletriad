@@ -53,20 +53,20 @@ module.exports = function(passport) {
             dbUser.findUser(profile.id,
                 err => {console.log(err)},
                 res => {
-                    if (res) {
-                        return done(res);
+                    if (!res) {
+                        res = {
+                            userid              : "",
+                            name                : profile.displayName,
+                            google_id           : profile.id,
+                            email               : profile.emails[0].value,
+                            google_token        : token,
+                            gender              : profile.gender,
+                            profile_photo_url   : profile.photos.length ? profile.photos[0].value : "",
+                            language            : profile._json ? profile._json.language : ""
+                            
+                        };
                     }
-                    else {
-                        var newUser          = {};
-                        // set all of the relevant information
-                        newUser.id    = profile.id;
-                        newUser.token = token;
-                        newUser.name  = profile.displayName;
-                        newUser.email = profile.emails[0].value; // pull the first email
-                        newUser.new = 'EEE';
-                        // save the user
-                        return done(null, newUser);
-                    }
+                    return done(null, res);
 
                 });
 
