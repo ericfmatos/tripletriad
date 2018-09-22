@@ -48,17 +48,29 @@ module.exports = function(passport) {
         // make the code asynchronous
         // User.findOne won't fire until we have all our data back from Google
         process.nextTick(function() {
+            
+            var dbUser = require('../db/user/user');
+            dbUser.findUser(profile.id,
+                err => {console.log(err)},
+                res => {
+                    if (res) {
+                        return done(res);
+                    }
+                    else {
+                        var newUser          = {};
+                        // set all of the relevant information
+                        newUser.id    = profile.id;
+                        newUser.token = token;
+                        newUser.name  = profile.displayName;
+                        newUser.email = profile.emails[0].value; // pull the first email
+                        newUser.new = 'EEE';
+                        // save the user
+                        return done(null, newUser);
+                    }
 
-                    var newUser          = {};
+                });
 
-                    // set all of the relevant information
-                    newUser.id    = profile.id;
-                    newUser.token = token;
-                    newUser.name  = profile.displayName;
-                    newUser.email = profile.emails[0].value; // pull the first email
 
-                    // save the user
-                    return done(null, newUser);
                     
         })
     }));

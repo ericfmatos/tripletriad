@@ -8,6 +8,7 @@
         "googleapis": "*",
         "passport": "*",
         "passport-google-oauth": "*",
-        "express-session": "*"
+        "express-session": "*",
+        "pg": "*"
     }
 }

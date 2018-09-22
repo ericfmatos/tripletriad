@@ -14,6 +14,7 @@ exports.Other = function(request, response){
 
 
 exports.Profile = function(request, response){
+    console.log(request.session.passport.user);
     response.pageInfo = {};
     response.pageInfo.title = 'Outro';
 
