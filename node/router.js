@@ -5,7 +5,13 @@ var HomeController = require('./controllers/HomeController');
 
 // Routes
 module.exports = function(app, passport){
-     
+
+    var bodyParser = require('body-parser');
+    app.use( bodyParser.json() );       // to support JSON-encoded bodies
+    app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+      extended: true
+    })); 
+    
 
     //var authPassport = require('/config/passport')(passport);
     // Main Routes
@@ -19,6 +25,12 @@ module.exports = function(app, passport){
         res.redirect('/');
     });
 
+
+    app.post('/create_user', function(req, res){
+        console.log(req.user);
+        console.log(req.body);
+        res.redirect('/profile');
+    });
 
    // =====================================
     // GOOGLE ROUTES =======================

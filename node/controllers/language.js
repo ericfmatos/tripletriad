@@ -2,6 +2,8 @@ module.exports = {
     loadRes: function(file, language, gender) {
         var fileData = require(file).texts;
         if (fileData) {
+            var def = fileData.default;
+            
             var res = fileData[language];
             var resFallback = {};
             var langFallbackTemp = language.split("_");
@@ -43,7 +45,13 @@ module.exports = {
                 }
             }
 
-            
+            if (def) {
+                for (var key in def) {
+                    if (!res[key]) {
+                        res[key] = def[key];
+                    }
+                }
+            }
 
         }
 

@@ -22,7 +22,12 @@ exports.Profile = function(request, response){
     }
     else {
         response.pageInfo = resOp.loadRes('../views/home/res/NewUser',user.language, user.gender);
-    
+        response.pageInfo.formData = user;
         response.render('home/NewUser', response.pageInfo);
     }
+};
+
+
+exports.Home = function(request, response) {
+    response.render('home/Other');
 };

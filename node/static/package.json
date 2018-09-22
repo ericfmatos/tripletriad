@@ -1,0 +1,9 @@
+{
+    "name": "tripleTriad_frontend",
+    "description": "Triple Triad FrontEnd dependencies",
+    "version": "0.0.1",
+    "dependencies": {
+        "jquery": "*",
+        "bootstrap": "*"
+    }
+}
