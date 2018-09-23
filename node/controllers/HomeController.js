@@ -20,12 +20,10 @@ exports.Profile = function(request, response){
     var user = request.session.passport.user;
     
     if (user.userid) {
-        
-        response.render('home/Home');
+        controllerFunc.renderPage(response, user.language, user.gender, 'home/Home', user);
     }
     else {
         controllerFunc.renderPage(response, user.language, user.gender, 'home/NewUser', user);
-        //response.render('home/NewUser', response.pageInfo);
     }
 };
 

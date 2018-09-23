@@ -6,7 +6,7 @@ module.exports =  {
     renderPage: function(response, language, gender, pageName, formData) {
 
 
-        response.pageInfo = languageController.loadRes('../views/' + pageName + '.res',language, gender) || {};
+        response.pageInfo = languageController.loadRes('../views/' + pageName + '.res',language, gender, formData) || {};
         if (formData) {
             response.pageInfo.formData = formData;
         }
