@@ -3,6 +3,9 @@ var http = require('http');
 var path = require('path');
 var passport = require('passport');
 var handlebars  = require('express-handlebars'), hbs;
+
+//handlebars.registerPartial(path.join(__dirname, 'views/partials'));
+
 var app = express();
  
 app.set('port', 8081);
@@ -26,9 +29,12 @@ const publicPath = path.join(__dirname, '../views');
 
 hbs = handlebars.create({
    defaultLayout: 'main',
-   layoutsDir   :  path.join(viewsDir, 'layouts')
+   layoutsDir   :  path.join(viewsDir, 'layouts'),
+   partialsDir  :  path.join( viewsDir, 'partials')
 });
  
+//app.engine('handlebars', handlebars({partialsDir: path.join(__dirname, 'views/partials')}));
+
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
  

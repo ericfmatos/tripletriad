@@ -1,3 +1,6 @@
+var controllerFunc = require('./common');
+
+
 exports.Index = function(request, response){
     response.pageInfo = {};
     response.pageInfo.title = 'Tríade Tripla';
@@ -15,15 +18,14 @@ exports.Other = function(request, response){
 
 exports.Profile = function(request, response){
     var user = request.session.passport.user;
-    var resOp = require('./language');
+    
     if (user.userid) {
         
-        response.render('home/Other');
+        response.render('home/Home');
     }
     else {
-        response.pageInfo = resOp.loadRes('../views/home/res/NewUser',user.language, user.gender);
-        response.pageInfo.formData = user;
-        response.render('home/NewUser', response.pageInfo);
+        controllerFunc.renderPage(response, user.language, user.gender, 'home/NewUser', user);
+        //response.render('home/NewUser', response.pageInfo);
     }
 };
 
