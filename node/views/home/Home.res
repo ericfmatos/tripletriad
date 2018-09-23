@@ -6,6 +6,13 @@ module.exports = {
             'default':
             {
                 'welcome'   : `Welcome, ${formData.name}`,
+                'level'     : 'Level',
+                'settings'  : 'Settings',
+                'status'    : 'Status',
+                'notifications' : 'Notifications',
+                'logout'    : 'Sign Out',
+                'profile'   : 'Profile',
+                'points'    : 'Points'
             },
 
             'pt': {
@@ -15,6 +22,13 @@ module.exports = {
                 'female': {
                     'welcome'   : `Bem-vinda, ${formData.name}`
                 },
+                'level'     : 'Nível',
+                'settings'  : 'Configurações',
+                'status'    : 'Status',
+                'notifications' : 'Notificações',
+                'logout'    : 'Sair',
+                'profile'   : 'Perfil',
+                'points'    : 'Pontos'
             },
 
             'es': {
@@ -24,6 +38,13 @@ module.exports = {
                 'female': {
                     'welcome'   : `Bienvenida, ${formData.name}`
                 },
+                'level'     : 'Nivel',
+                'settings'  : 'Configuración',
+                'status'    : 'Estatus',
+                'notifications' : 'Notificaciones',
+                'logout'    : 'Salir',
+                'profile'   : 'Perfil',
+                'points'    : 'Puntos'
             }
 
 

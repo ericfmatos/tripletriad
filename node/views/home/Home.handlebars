@@ -1,1 +1,19 @@
+
 <h2>{{welcome}}</h2>
+
+<ul class="nav navbar-nav">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{formData.nickname}} <span class="glyphicon glyphicon-user pull-right"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="/profile">{{profile}} <span class="glyphicon glyphicon-user pull-right"></span></a></li>
+      <li><a href="#">{{settings}} <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
+      <li><a href="#">{{status}} <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
+      <li><a href="#">{{notifications}} <span class="badge pull-right"> 0 </span></a></li>
+      <li class="divider"></li>
+      <li><a href="#">{{level}} <span class="badge pull-right"> {{formData.current_level}} </span></a></li>
+      <li><a href="#">{{points}} <span class="badge pull-right"> {{formData.current_point}} </span></a></li>
+      <li class="divider"></li>
+      <li><a href="/logout">{{logout}} <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+    </ul>
+  </li>
+</ul>

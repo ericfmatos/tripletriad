@@ -17,7 +17,7 @@ module.exports = function(app, passport){
     // Main Routes
      
     app.get('/', HomeController.Index);
-    app.get('/other', HomeController.Other); 
+    app.get('/home', isLoggedIn,  HomeController.Home);
     app.get('/profile', isLoggedIn,  HomeController.Profile);
 
     app.get('/logout', function(req, res) {
@@ -39,7 +39,7 @@ module.exports = function(app, passport){
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
             passport.authenticate('google', {
-                    successRedirect : '/profile',
+                    successRedirect : '/home',
                     failureRedirect : '/'
             }));
     

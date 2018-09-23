@@ -56,13 +56,19 @@ module.exports = {
 
 
                 if (userData.userid) {
-                    //TODO update user
+                    query = `UPDATE ${pgClient.schema}.users 
+                                SET 
+                                     name       = '${userData.name}'
+                                    ,nickname   = '${userData.nickname}'
+                                    ,email      = '${userData.email}'
+                                    ,language   = '${userData.language}'
+                             WHERE userid = ${userData.userid};`;
                 }
                 else {
                     query = `INSERT INTO ${pgClient.schema}.users 
-                                (name, google_id, email, google_token, gender, profile_photo_url, language)
+                                (name, nickname, google_id, email, google_token, gender, profile_photo_url, language)
                             VALUES
-                                ('${userData.name}', '${userData.google_id}', '${userData.email}', '${userData.google_token}', '${userData.gender}',
+                                ('${userData.name}', '${userData.nickname}', '${userData.google_id}', '${userData.email}', '${userData.google_token}', '${userData.gender}',
                                  '${userData.profile_photo_url}', '${userData.language}')
                             RETURNING userid;
                             `
@@ -84,8 +90,10 @@ module.exports = {
                                         return done(null);
                                     }
                                     else {
-                                        var data = result.rows[0];
-                                        userData.userid = data.userid;
+                                        if (!userData.userid) {
+                                            var data = result.rows[0];
+                                            userData.userid = data.userid;
+                                        }
                                         return done (userData);
                                     }
 

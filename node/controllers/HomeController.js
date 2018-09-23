@@ -8,15 +8,20 @@ exports.Index = function(request, response){
     response.render('home/Index', response.pageInfo);
 };
  
-exports.Other = function(request, response){
-    response.pageInfo = {};
-    response.pageInfo.title = 'Outro';
 
-    response.render('home/Other');
-};
+exports.Profile = function(request, response) {
+    var user = request.session.passport.user;
+    
+    if (user.userid) {
+        controllerFunc.renderPage(response, user.language, user.gender, 'home/Profile', user, 'home/NewUser');
+    }
+    else {
+        controllerFunc.renderPage(response, user.language, user.gender, 'home/NewUser', user);
+    }
+}
 
 
-exports.Profile = function(request, response){
+exports.Home = function(request, response){
     var user = request.session.passport.user;
     
     if (user.userid) {
@@ -41,7 +46,7 @@ exports.SaveUser = function(request, response) {
         err => response.err(err),
         data => { 
             request.session.passport.user = data;
-            response.redirect('/profile');
+            response.redirect('/home');
         }
         );  
 
@@ -49,7 +54,3 @@ exports.SaveUser = function(request, response) {
    
 }
 
-
-exports.Home = function(request, response) {
-    response.render('home/Other');
-};

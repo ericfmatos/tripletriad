@@ -4,6 +4,6 @@
     "version": "0.0.1",
     "dependencies": {
         "jquery": "*",
-        "bootstrap": "*"
+        "bootstrap": "3.2.0"
     }
 }

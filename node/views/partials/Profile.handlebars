@@ -1,8 +1,13 @@
-    <legend>{{signup}}</legend>
+
     <form accept-charset="UTF-8" action="./create_user/" method="post">
         <div class="form-group">
             <label for="name">{{fullname}}</label>
 		    <input class="form-control" name="name" placeholder="{{fullname}}" value="{{formData.name}}" type="text"> 
+        </div>
+        
+        <div class="form-group">
+            <label for="nickname">{{nickname}}</label>
+		    <input class="form-control" name="nickname" placeholder="{{nickname}}" value="{{formData.nickname}}" type="text"> 
         </div>
         
         <div class="form-group"></div>
