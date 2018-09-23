@@ -2,10 +2,9 @@
 body {
     background:#f0f0f0;
 }
-.nav {
-    left:50%;
-    margin-left:-150px;
-    top:50px;
+.profile-menu {
+    top:10px;
+    right: 10px;
     position:absolute;
 }
 .nav>li>a:hover, .nav>li>a:focus, .nav .open>a, .nav .open>a:hover, .nav .open>a:focus {

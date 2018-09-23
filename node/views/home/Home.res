@@ -12,7 +12,11 @@ module.exports = {
                 'notifications' : 'Notifications',
                 'logout'    : 'Sign Out',
                 'profile'   : 'Profile',
-                'points'    : 'Points'
+                'points'    : 'Points',
+                'play'      : 'Play!',
+                'cards'     : 'My Cards',
+                'exchange'  : 'Exchange My Points',
+                'shop'      : 'Shop'
             },
 
             'pt': {
@@ -28,7 +32,12 @@ module.exports = {
                 'notifications' : 'Notificações',
                 'logout'    : 'Sair',
                 'profile'   : 'Perfil',
-                'points'    : 'Pontos'
+                'points'    : 'Pontos',
+                'play'      : 'Jogar!',
+                'cards'     : 'Minhas cartas',
+                'exchange'  : 'Trocar meus pontos',
+                'shop'      : 'Loja'
+
             },
 
             'es': {
@@ -44,7 +53,12 @@ module.exports = {
                 'notifications' : 'Notificaciones',
                 'logout'    : 'Salir',
                 'profile'   : 'Perfil',
-                'points'    : 'Puntos'
+                'points'    : 'Puntos',
+                'play'      : 'Jugar!',
+                'cards'     : 'Mis cartas',
+                'exchange'  : 'Canjear mis puntos',
+                'shop'      : 'Tienda'
+
             }
 
 
