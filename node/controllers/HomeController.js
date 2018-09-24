@@ -2,10 +2,10 @@ var controllerFunc = require('./common');
 
 
 exports.Index = function(request, response){
-    response.pageInfo = {};
-    response.pageInfo.title = 'Tríade Tripla';
+
+    controllerFunc.renderPage(response, controllerFunc.matchLanguage(request.acceptsLanguages()), 'male', 'home/Index') ;
+
     
-    response.render('home/Index', response.pageInfo);
 };
  
 
@@ -43,7 +43,11 @@ exports.SaveUser = function(request, response) {
 
     var dbUser = require('../db/user/user');
     dbUser.saveUser(curUser, 
-        err => response.err(err),
+        err => 
+        { 
+            response.status(500);
+            console.log(err)
+        },
         data => { 
             request.session.passport.user = data;
             response.redirect('/home');

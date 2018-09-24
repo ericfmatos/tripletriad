@@ -6,12 +6,14 @@ module.exports = {
         'default':
         {
             'welcome'   : 'Welcome',
-            'signup'    : 'Sign Up',
+            'signup'    : 'Sign up and join billions of players across the multiverse!',
             'fullname'  : 'Full Name',
             'email'     : 'E-mail',
             'language'  : 'Language',
             'ok'        : 'Submit',
-            'nickname'  : 'Nickname'
+            'nickname'  : 'Nickname',
+            'profile'   : 'Your profile',
+            'return'    : 'Return'
         },
         
 
@@ -22,26 +24,31 @@ module.exports = {
             'male': {
                 'welcome'   : 'Bem-vindo'
             },
-
-            'signup'        : 'Cadastre-se',
+            'profile'       : 'Seu perfil',
+            'signup'        : 'Cadastre-se e una-se a bilhões de jogadores no multiverso!',
             'fullname'      : 'Nome completo',
             'email'         : 'E-mail',
             'language'      : 'Idioma',
             'ok'            : 'Enviar',
-            'nickname'      : 'Nickname'  
+            'nickname'      : 'Nickname' ,
+            'return'        : 'Voltar' 
         },
 
         'es': {
             'female': {
                 'welcome'   :'Bienvenida'
             },
-            'welcome'       : 'Bienvenido',
-            'signup'        : 'Registra-te',
+            'male': {
+                'welcome'       : 'Bienvenido',
+            },
+            'profile'       : 'Tu perfil',
+            'signup'        : '¡Regístrate y únete a billones de usuarios en el multiverso!',
             'fullname'      : 'Nombre completo',
             'email'         : 'Correo electrónico',
             'language'      : 'Idioma',
             'ok'            : 'Vale',
-            'nickname'      : 'Sobrenombre'
+            'nickname'      : 'Sobrenombre',
+            'return'        : 'Volver'
         },
 
         

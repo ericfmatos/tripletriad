@@ -1,4 +1,8 @@
 module.exports = {
+
+    languagesAccepted: ['pt', 'es', 'en', 'en', 'it', 'fr'],
+
+
     loadRes: function(file, language, gender, formData) {
         var fileData = require(file);
         if (fileData) {

@@ -1,9 +1,7 @@
 
-<h2>{{welcome}}</h2>
-
 <ul class="nav navbar-nav profile-menu">
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{formData.nickname}} <span class="glyphicon glyphicon-user pull-right"></span></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{formData.nickname}}  <img class="pull-right img-profile" src="{{formData.profile_photo_url}}"> </a>
     <ul class="dropdown-menu">
       <li><a href="/profile">{{profile}} <span class="glyphicon glyphicon-user pull-right"></span></a></li>
       <li><a href="#">{{settings}} <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
@@ -19,10 +17,11 @@
 </ul>
 
 
-
-<ul class="nav nav-pills nav-stacked">
-  <li><a href="/play">{{play}} <span class="fa fa-gamepad pull-right"></span></a></li>
-  <li><a href="/cards">{{cards}} <span class="fas fa-layer-group pull-right"></span></a></li>
-  <li><a href="/exchange_points">{{exchange}} <span class="fas fa-dice pull-right"></span></a></li>
-  <li><a href="/shop">{{shop}} <span class="fa fa-shopping-bag pull-right"></span></a></li>
-</ul>
+<div class="center-box">
+  <ul class="nav nav-pills nav-stacked game-main-menu">
+    <li><a href="/play">{{play}} <span class="fa fa-gamepad pull-right"></span></a></li>
+    <li><a href="/cards">{{cards}} <span class="fas fa-layer-group pull-right"></span></a></li>
+    <li><a href="/exchange_points">{{exchange}} <span class="fas fa-dice pull-right"></span></a></li>
+    <li><a href="/shop">{{shop}} <span class="fa fa-shopping-bag pull-right"></span></a></li>
+  </ul>
+</div>
