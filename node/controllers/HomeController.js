@@ -1,5 +1,5 @@
 var controllerFunc = require('./common');
-
+var languageController = require('./language');
 
 exports.Index = function(request, response){
 
@@ -32,6 +32,7 @@ exports.Home = function(request, response){
     }
 };
 
+
 exports.SaveUser = function(request, response) {
 
     var curUser = request.session.passport.user;
@@ -45,12 +46,28 @@ exports.SaveUser = function(request, response) {
     dbUser.saveUser(curUser, 
         err => 
         { 
+            console.log(err);
             response.status(500);
-            console.log(err)
         },
         data => { 
             request.session.passport.user = data;
-            response.redirect('/home');
+
+            var texts = languageController.loadRes('./notifications/newUser.res', data.language, data.gender, data) ;
+
+            var dbNotification = require('../db/user/notifications');
+            dbNotification.sendNotification({
+                userid: data.userid,
+                title: texts.title,
+                message: texts.message  
+            },
+            err => {
+                console.log(err);
+                response.redirect('/home');
+            },
+            data => {
+                response.redirect('/home');
+            })
+           
         }
         );  
 

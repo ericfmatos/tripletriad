@@ -1,5 +1,6 @@
 
 var HomeController = require('./controllers/HomeController');
+var NotificationController = require('./controllers/NotificationController');
  
 
 
@@ -28,6 +29,15 @@ module.exports = function(app, passport){
 
     app.post('/create_user', isLoggedIn, HomeController.SaveUser);
 
+
+/***
+ *  routes to client interaction
+ */
+
+    app.get('/notification/next', isLoggedIn, NotificationController.ReadNext);
+    app.post('/notification/setRead', isLoggedIn, NotificationController.NotificationRead);
+
+
    // =====================================
     // GOOGLE ROUTES =======================
     // =====================================
@@ -43,6 +53,9 @@ module.exports = function(app, passport){
                     failureRedirect : '/'
             }));
     
+
+   
+
 };
 
 
