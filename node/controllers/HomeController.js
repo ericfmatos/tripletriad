@@ -34,8 +34,9 @@ exports.Home = function(request, response){
 
 
 exports.SaveUser = function(request, response) {
-
+    
     var curUser = request.session.passport.user;
+    var isNew = !curUser.userid;
     var newUser = request.body;
 
     for (var key in newUser) {
@@ -51,23 +52,25 @@ exports.SaveUser = function(request, response) {
         },
         data => { 
             request.session.passport.user = data;
+            response.redirect('/home');
+            if (isNew) {
 
-            var texts = languageController.loadRes('./notifications/newUser.res', data.language, data.gender, data) ;
+                var texts = languageController.loadRes('./notifications/newUser.res', data.language, data.gender, data) ;
 
-            var dbNotification = require('../db/user/notifications');
-            dbNotification.sendNotification({
-                userid: data.userid,
-                title: texts.title,
-                message: texts.message  
-            },
-            err => {
-                console.log(err);
-                response.redirect('/home');
-            },
-            data => {
-                response.redirect('/home');
-            })
-           
+                var dbNotification = require('../db/user/notifications');
+                dbNotification.sendNotification(
+                    {
+                        userid: data.userid,
+                        title: texts.title,
+                        message: texts.message  ,
+                        level: 7 //notification sign, popup and email
+                    },
+                    err => {
+                        console.log(err);
+                    },
+                    data => {}
+                );
+            }
         }
         );  
 

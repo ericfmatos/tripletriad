@@ -1,11 +1,11 @@
 var controllerFunc = require('./common');
 var languageController = require('./language');
+var dbNotification = require('../db/user/notifications');
 
-exports.ReadNext = function(request, response){
+exports.GetMyNotifications = function(request, response){
     var curUser = request.session.passport.user;
     
-    var dbNotification = require('../db/user/notifications');
-    dbNotification.getNextNotification(curUser.userid, 
+    dbNotification.getMyNotifications(curUser.userid, 
         err => 
         { 
             console.log(err);
@@ -16,7 +16,7 @@ exports.ReadNext = function(request, response){
                 return response.json(data);
             }
             else {
-                return response.json({});
+                return response.status(200);
             }
            
         }
@@ -27,7 +27,7 @@ exports.ReadNext = function(request, response){
 exports.NotificationRead = function(request, response) {
     var notificaitonid = request.body;
     if (notificaitonid) {
-        var dbNotification = require('../db/user/notifications');
+        
         dbNotification.notificationRead(notificaitonid.notificationId, 
             err => 
             { 
