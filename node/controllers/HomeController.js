@@ -1,5 +1,6 @@
 var controllerFunc = require('./common');
 var languageController = require('./language');
+var gameConfig = require('../config/game');
 
 exports.Index = function(request, response){
 
@@ -26,6 +27,25 @@ exports.Home = function(request, response){
     
     if (user.userid) {
         controllerFunc.renderPage(response, user.language, user.gender, 'home/Home', user);
+
+        if (!user.status) {
+            var cardHandler = require('../core/cards');
+            
+            //user, count, level, deckid
+            cardHandler.createCards({
+                user    : user,
+                count   : gameConfig.initialCards.count,
+                level   : gameConfig.initialCards.level,
+                deckid  : gameConfig.initialCards.deckid
+            },
+            _err => console.log(_err),
+            _cards => {
+                    console.log(_cards);
+                    user.status = 1; //TODO
+                } 
+            );
+        }
+
     }
     else {
         controllerFunc.renderPage(response, user.language, user.gender, 'home/NewUser', user);

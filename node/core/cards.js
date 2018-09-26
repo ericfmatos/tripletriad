@@ -3,13 +3,6 @@ var dbCards = require('../db/cards/cards');
 module.exports = {
 
     //user, count, level, deckid
-    setCardNumbers: function(user_card, card) {
-
-        //user_card.numbers[0] = ;
-    },
-
-
-
     createCards: function( data, err, done ) {
         dbCards.listCardsFromDeck(
             {
@@ -29,8 +22,8 @@ module.exports = {
                     }
 
                     card = _res.splice(random(0, _res.length-1),1);
-                    if (card) {
-
+                    if (card && card.length && card[0]) {
+                        card = card[0];
                         user_card = {
                             userid  : data.user.userid,
                             cardid  : card.cardid,
@@ -38,10 +31,11 @@ module.exports = {
                             data    : {}
                         };
 
-                        this.setCardNumbers(user_card, card);
-                        
+                        user_card = setCardNumbers(user_card, card);
+                        user_cards.push(user_card);
                     }
                 }
+                return done(user_cards);
             }
         );
     },
@@ -51,4 +45,27 @@ module.exports = {
 
 function random(a,b) {
     return Math.random() + (b-a) + a;
+}
+
+
+function  setCardNumbers(user_card, card) {
+
+    var numbers = [];
+
+    if (card.level <= 10) {
+        numbers[0] = card.level <= 3 ? 3 : card.level;
+        numbers[1] = card.level <= 2 ? 2 : random(card.level / 2, card.level - 1);
+        numbers[2] = card.level <= 2 ? 1 : random(card.level / 2, card.level - 1);
+        numbers[3] = card.level <= 2 ? 1 : random(card.level / 2, card.level - 2);
+
+        for (var i = 0; i < 4; i ++) {
+            user_card.numbers[i] = numbers.splice(random(0, numbers.length-1),1);
+        }
+    }  else {
+        //TODO
+    }
+
+    return user_card;
+
+
 }
