@@ -1,6 +1,8 @@
 var controllerFunc = require('./common');
 var languageController = require('./language');
 var dbNotification = require('../db/user/notifications');
+var logger = require('../core/logger');
+
 
 exports.GetMyNotifications = function(request, response){
     var curUser = request.session.passport.user;
@@ -8,8 +10,8 @@ exports.GetMyNotifications = function(request, response){
     dbNotification.getMyNotifications(curUser.userid, 
         err => 
         { 
-            console.log(err);
             response.status(500);
+            logger.error(`could not send welcome notification to user ${data.userid}.`, {err, notificationData, data});
         },
         data => { 
             if (data) {
@@ -31,8 +33,8 @@ exports.NotificationRead = function(request, response) {
         dbNotification.notificationRead(notificaitonid.notificationId, 
             err => 
             { 
-                console.log(err);
                 response.status(500);
+                logger.critical(`could not set notificationid ${notificaitonid.notificationId} as read.`, {err, notificaitonid});
             },
             data => { 
                 return response.status(200);

@@ -12,10 +12,11 @@ module.exports = {
             where.push(`A.deckid = ${data.deck}`);
         }
 
-        var query = `SELECT * FROM ${pgClient.schema}.cards A `;
+        var query = `SELECT A.*, to_json(D) as deck FROM ${pgClient.schema}.cards A inner join ${pgClient.schema}.decks D on a.deckid = D.deckid `;
         if (where.length) {
             query = query + ' WHERE ' +  where.join(" and ");
         }
+        query = query + ';';
 
 
         var conn = pgClient.execQuery(
@@ -39,24 +40,28 @@ module.exports = {
    
     addUserCards: function (data, err, done) {
 
-        if (data) {
-            var values = [];
-            data.map(_card => {
-                values.push(`(${_card.userid}, ${_card.cardid}, ${_card.numbers}, ${(_card.data ? '' + _card.data + '' : 'NULL')})`);
-            });
-
-            var query = `INSERT INTO ${pgClient.schema}.user_cards (userid, cardid, numbers, data) VALUES ${values.join(',')}`;
-            
+        if (data && data.userid && data.user_cards && data.user_cards.length) {
 
             var conn = pgClient.execQuery(
-                query,
+                `select * from ${pgClient.schema}.fn_add_user_cards(${data.userid}, '${JSON.stringify(data.user_cards)}');`,
                 _err => err(_err),
                 _data => {
-                    return done(_data.rowCount);
+                    if (_data.rowCount && _data.rows && _data.rows.length && _data.rows[0] && _data.rows[0].fn_add_user_cards) {
+                        var jsonRes = JSON.parse(_data.rows[0].fn_add_user_cards);
+                        if (jsonRes && jsonRes.user_status) {
+                            return done(jsonRes.user_status);
+                        }
+                    }
+                    else {
+                        return _err(new Error('no rows affected'));
+                    }
+                    
                 }
 
 
             );
+
+           
         }
     }
     

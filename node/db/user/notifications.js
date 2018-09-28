@@ -6,7 +6,7 @@ module.exports = {
         pgClient.execQuery(
             `SELECT * FROM ${pgClient.schema}.notifications 
             WHERE userid = ${userid} and read_date is NULL and now() <= expiration_date
-            ORDER BY creation_date DESC limit 1;`
+            ORDER BY creation_date limit 1;`
             ,
             _err => err(_err),
             result => {

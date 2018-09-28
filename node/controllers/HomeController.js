@@ -1,6 +1,8 @@
 var controllerFunc = require('./common');
 var languageController = require('./language');
 var gameConfig = require('../config/game');
+var logger = require('../core/logger')
+var notificationHandler = require('../core/notification');
 
 exports.Index = function(request, response){
 
@@ -28,7 +30,9 @@ exports.Home = function(request, response){
     if (user.userid) {
         controllerFunc.renderPage(response, user.language, user.gender, 'home/Home', user);
 
-        if (!user.status) {
+        logger.info(`userid ${user.userid} nick ${user.nickname} logged on`, {user});
+
+        if (!user.current_status) {
             var cardHandler = require('../core/cards');
             
             //user, count, level, deckid
@@ -38,10 +42,9 @@ exports.Home = function(request, response){
                 level   : gameConfig.initialCards.level,
                 deckid  : gameConfig.initialCards.deckid
             },
-            _err => console.log(_err),
+            _err => logger.critical(`could not create cards for userid ${user.userid}`, {_err, user}), 
             _cards => {
-                    console.log(_cards);
-                    user.status = 1; //TODO
+                // do nothing...
                 } 
             );
         }
@@ -67,28 +70,23 @@ exports.SaveUser = function(request, response) {
     dbUser.saveUser(curUser, 
         err => 
         { 
-            console.log(err);
             response.status(500);
+            logger.critical(`could not save user.`, {err, curUser});
         },
         data => { 
             request.session.passport.user = data;
             response.redirect('/home');
             if (isNew) {
 
-                var texts = languageController.loadRes('./notifications/newUser.res', data.language, data.gender, data) ;
-
-                var dbNotification = require('../db/user/notifications');
-                dbNotification.sendNotification(
-                    {
-                        userid: data.userid,
-                        title: texts.title,
-                        message: texts.message  ,
-                        level: 7 //notification sign, popup and email
-                    },
-                    err => {
-                        console.log(err);
-                    },
-                    data => {}
+                var texts = languageController.loadRes('../notifications/newUser.res', data.language, data.gender, data) ;
+                notificationHandler.sendNotification({
+                    userid: data.userid,
+                    title: texts.title,
+                    message: texts.message,
+                    level: notificationHandler.LEVEL.SIGN + notificationHandler.LEVEL.POPUP + notificationHandler.LEVEL.EMAIL
+                },
+                    _notErr => { logger.error(`could not send welcome notification to user ${data.userid}.`, {_notErr, notificationData, data}); return true; }, 
+                    _data => { }// do nothing
                 );
             }
         }

@@ -35,7 +35,7 @@ module.exports =  {
 
                 conn.end(function(endErr) {
                     if (endErr) {
-                        console.log('error closing conn: %1', endErr);
+                        logger.error(`error closing conn to db`, {endErr});
                     }
                 });
 
@@ -55,13 +55,21 @@ module.exports =  {
 
                 try {
                     conn.query(query, function(_errQuery, _resQuery) {
+                        if (_errQuery) {
+                            onError(_errQuery);
+                        }
+                        
+                        if (_resQuery) {
+                            onDone(_resQuery);
+                        }
+                        
                         conn.end(function(endErr) {
                             if (endErr) {
-                                console.log('error closing conn: %1', endErr);
+                                onError(endErr);
                             }
                         });
 
-                        onDone(_resQuery);
+                        
                     }) ;   
                 }
                 catch (_err) {

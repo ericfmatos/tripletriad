@@ -82,7 +82,9 @@ var HomeHandler = function() {
     }
 
     function timerExecution() {
-        getMyUpdates();
+        if ($(".modal__notification").length == 0 || $(".modal__notification").css('display') == 'none') {
+            getMyUpdates();
+        }
     }
 
     function startTimer(){

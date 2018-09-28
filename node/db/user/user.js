@@ -58,7 +58,7 @@ module.exports = {
                 else {
                     if (!userData.userid) {
                         var data = result.rows[0];
-                        userData.userid = data.userid;
+                        userData.userid = parseInt(data.userid);
                     }
                     return done (userData);
                 }

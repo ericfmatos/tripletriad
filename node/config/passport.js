@@ -1,6 +1,6 @@
 // load all the things we need
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-
+var logger = require('../core/logger');
 // load up the user model
 //var User       = require('../app/models/user');
 
@@ -50,7 +50,7 @@ module.exports = function(passport) {
             
             var dbUser = require('../db/user/user');
             dbUser.findUser(profile.id,
-                err => {console.log(err)},
+                err => { logger.critical(`could not find google user ${profile.id}`, { err, profile}) },
                 res => {
                     if (!res) {
                         res = {
