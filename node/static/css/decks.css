@@ -1,0 +1,23 @@
+.card-deck--ffviii .card__header {
+    background-color: #2946bd;
+
+}
+
+
+.card-deck--ffviii span.card__level__value {
+    color: #2946bd;
+    border: 1px solid #2946bd;
+
+}
+
+
+.card-deck--ffviii .card__img {
+    background: rgba(147,206,222,1);
+    background: -moz-linear-gradient(top, rgb(225, 225, 231) 0%, rgb(123, 140, 206) 19%, rgb(34, 66, 189) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(147,206,222,1)), color-stop(19%, rgba(147,206,222,1)), color-stop(100%, rgba(73,165,191,1)));
+    background: -webkit-linear-gradient(top, rgb(225, 225, 231) 0%, rgb(123, 140, 206) 19%, rgb(34, 66, 189) 100%);
+    background: -o-linear-gradient(top, rgb(225, 225, 231) 0%, rgb(123, 140, 206) 19%, rgb(34, 66, 189) 100%);
+    background: -ms-linear-gradient(top, rgb(225, 225, 231) 0%, rgb(123, 140, 206) 19%, rgb(34, 66, 189) 100%);
+    background: linear-gradient(to bottom, rgba(225, 225, 231,1) 0%, rgba(123, 140, 206,1) 19%, rgba(34, 66, 189,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#93cede', endColorstr='#49a5bf', GradientType=0 );
+}

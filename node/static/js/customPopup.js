@@ -58,6 +58,10 @@ var popupDialog = popupDialog || (function ($) {
 		 */
 		hide: function () {
 			$dialog.modal('hide');
+		},
+
+		isVisible: function() {
+			return $dialog.css('display') != "" && $dialog.css('display') != 'none';
 		}
 	};
 

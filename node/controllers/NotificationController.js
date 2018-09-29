@@ -18,7 +18,7 @@ exports.GetMyNotifications = function(request, response){
                 return response.json(data);
             }
             else {
-                return response.status(200);
+                return response.json({success: true});
             }
            
         }
@@ -37,7 +37,7 @@ exports.NotificationRead = function(request, response) {
                 logger.critical(`could not set notificationid ${notificaitonid.notificationId} as read.`, {err, notificaitonid});
             },
             data => { 
-                return response.status(200);
+                return response.json({success: true});
             }
             );  
     }

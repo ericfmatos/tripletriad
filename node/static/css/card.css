@@ -1,0 +1,87 @@
+.card {
+    text-align: center;
+    border-radius: 10px;
+    -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    margin: 4px;
+    border: 1px solid #55555585;
+    width: 150px;
+    height: 220px;
+    box-sizing: border-box;
+    font-size: 10px;
+    padding: 4px;
+    position: relative;
+}
+
+.card .card__header {
+    text-align: center;
+    padding: 2px;
+    width: 100%;
+    border-radius: 8px;
+    color: white;
+    position: relative;
+    margin-bottom: 4px;
+}
+
+.card .card__header .card__name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+span.card__level__caption {
+    position: absolute;
+    font-size: 0.8em;
+    bottom: 0;
+    right: 4px;
+}
+
+span.card__level__value {
+    border-radius: 100%;
+    background-color: white;
+    text-align: center;
+    vertical-align: middle;
+    height: 20px;
+    width: 20px;
+    position: absolute;
+    right: 0;
+    font-weight: 900;
+    bottom: -1px;
+    line-height: 20px;
+    box-sizing: content-box;
+    font-size: 1.5em;
+    font-family: arial;
+}
+
+.card__img {
+    vertical-align: middle;
+    height: 170px;
+    line-height: 170px;
+    position: relative;
+}
+
+.card__numbers {
+    position: absolute;
+    top: 0;
+    font-size: 2em;
+    font-family: 'Times New Roman';
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    padding: 0 4px;
+}
+
+.card__numbers span:first-child, .card__numbers span:last-child {
+    display: block;
+} 
+
+.card__numbers span:first-child + span {
+    margin-right: 10px;
+}
+
+span.card__deck {
+    display: block;
+    width: 100%;
+    padding: 4px;
+}

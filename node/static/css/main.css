@@ -128,3 +128,12 @@ legend {
 .game-main-menu li a:hover {
     background-color: #f0f8ff9e;
 }
+
+.new-cards > ul {
+    list-style: none;
+    padding: 0;
+}
+
+.new-cards > ul > li {
+    display: inline-block;
+}

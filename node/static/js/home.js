@@ -23,6 +23,10 @@ var HomeHandler = function() {
         setNotificationRead(data.notificationid);
     }
 
+    function notificationHidden(data) {
+        getMyUpdates();
+    }
+
     var getMyUpdates =  function () {
         $.get('/notification/updates', function(data, status) {
             var showPopup = null;
@@ -52,7 +56,10 @@ var HomeHandler = function() {
                 }
 
                 if (showPopup) {
-                    popupDialog.show(showPopup.title, showPopup.message, showPopup, { onShown: notificationShown });
+                    popupDialog.show(showPopup.title, showPopup.message, showPopup, { 
+                        onShown: notificationShown,
+                        onHide : notificationHidden
+                    });
                 }
 
             }
@@ -82,7 +89,7 @@ var HomeHandler = function() {
     }
 
     function timerExecution() {
-        if ($(".modal__notification").length == 0 || $(".modal__notification").css('display') == 'none') {
+        if (!popupDialog.isVisible()) {
             getMyUpdates();
         }
     }

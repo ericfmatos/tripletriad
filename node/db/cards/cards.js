@@ -53,7 +53,7 @@ module.exports = {
                         }
                     }
                     else {
-                        return _err(new Error('no rows affected'));
+                        return err(new Error('no rows affected'));
                     }
                     
                 }
