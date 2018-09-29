@@ -9,7 +9,6 @@ header {
     padding: 4px;
     margin-bottom: 8px;
     vertical-align: middle;
---    line-height: 74px;
     height: 74px;;
 }
 header span.version {
@@ -129,6 +128,11 @@ legend {
     background-color: #f0f8ff9e;
 }
 
+
+.new-cards {
+    text-align: center;
+}
+
 .new-cards > ul {
     list-style: none;
     padding: 0;
@@ -136,4 +140,11 @@ legend {
 
 .new-cards > ul > li {
     display: inline-block;
+}
+
+
+.modal-dialog{
+    max-width: 80%;
+    min-width: 600px;
+    width: auto;
 }

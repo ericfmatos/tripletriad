@@ -62,7 +62,7 @@ module.exports = {
                                 cards: user_cards
                             };
 
-                            var texts = languageController.loadRes('../notifications/cardsEarned.res', data.user.language, data.user.gender, formData) ;
+                            var texts = languageController.loadRes('../resources/cardsEarned.res', data.user.language, data.user.gender, formData) ;
                             var notificationData = {
                                 userid: data.user.userid,
                                 title: texts.title,

@@ -78,7 +78,7 @@ exports.SaveUser = function(request, response) {
             response.redirect('/home');
             if (isNew) {
 
-                var texts = languageController.loadRes('../notifications/newUser.res', data.language, data.gender, data) ;
+                var texts = languageController.loadRes('../resources/newUser.res', data.language, data.gender, data) ;
                 notificationHandler.sendNotification({
                     userid: data.userid,
                     title: texts.title,
