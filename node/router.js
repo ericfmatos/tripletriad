@@ -1,6 +1,7 @@
 
 var HomeController = require('./controllers/HomeController');
 var NotificationController = require('./controllers/NotificationController');
+var CardsController = require('./controllers/CardsController');
 
 
 
@@ -29,11 +30,15 @@ module.exports = function(app, passport){
 
     app.post('/create_user', isLoggedIn, HomeController.SaveUser);
 
+    var routerFolder = '';
+
+
+    app.get('/cards', isLoggedIn,  CardsController.Index);
 
 /***
  *  routes to client interaction
  */
-    const routerFolder = '/notification/';
+    routerFolder = '/notification/';
 
     app.get(routerFolder +'updates', isLoggedIn, NotificationController.GetMyNotifications);
     app.post(routerFolder +'setRead', isLoggedIn, NotificationController.NotificationRead);

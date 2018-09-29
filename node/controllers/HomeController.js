@@ -6,21 +6,39 @@ var notificationHandler = require('../core/notification');
 
 exports.Index = function(request, response){
 
-    controllerFunc.renderPage(response, controllerFunc.matchLanguage(request.acceptsLanguages()), 'male', 'home/Index') ;
-
-    
+    controllerFunc.renderPage(
+        {
+            response,
+            language : controllerFunc.matchLanguage(request.acceptsLanguages()),
+            gender   : 'male', 
+            pageName : 'home/Index'
+        }
+    );
+        
 };
  
 
 exports.Profile = function(request, response) {
     var user = request.session.passport.user;
     
+    var renderData = {
+        response,
+        language : user.language, 
+        gender   : user.gender, 
+        formData : user,
+        resFile  : 'home/NewUser'
+    }
+
+
     if (user.userid) {
-        controllerFunc.renderPage(response, user.language, user.gender, 'home/Profile', user, 'home/NewUser');
+        renderData.pageName = 'home/Profile';
     }
     else {
-        controllerFunc.renderPage(response, user.language, user.gender, 'home/NewUser', user);
+        renderData.pageName = 'home/NewUser';
     }
+
+    controllerFunc.renderPage(renderData);
+
 }
 
 
@@ -28,7 +46,16 @@ exports.Home = function(request, response){
     var user = request.session.passport.user;
     
     if (user.userid) {
-        controllerFunc.renderPage(response, user.language, user.gender, 'home/Home', user);
+        controllerFunc.renderPage(
+            {
+                response,
+                language : user.language, 
+                gender   : user.gender, 
+                formData : user,
+                pageName : 'home/Home',
+                layout   : 'LoggedOn'
+            }
+        );
 
         logger.info(`userid ${user.userid} nick ${user.nickname} logged on`, {user});
 
@@ -51,7 +78,16 @@ exports.Home = function(request, response){
 
     }
     else {
-        controllerFunc.renderPage(response, user.language, user.gender, 'home/NewUser', user);
+        controllerFunc.renderPage(
+            {
+                response,
+                language : user.language, 
+                gender   : user.gender, 
+                formData : user,
+                pageName : 'home/NewUser'
+            }
+        );
+            
     }
 };
 

@@ -63,8 +63,34 @@ module.exports = {
 
            
         }
-    }
-    
+    },
+
+
+    listUserCards: function(userid, err, done) {
+
+        var query = `select a.*, row_to_json(b) as card from ${pgClient.schema}.user_cards a inner join
+                            (select card.*, row_to_json(deck) as deck from ${pgClient.schema}.cards card 
+                            inner join ${pgClient.schema}.decks deck on card.deckid = deck.deckid) b
+                            on a.cardid = b.cardid
+                    order by a.cardid;`;
+
+        var conn = pgClient.execQuery(
+            query,
+            _err => err(_err),
+            _data => {
+                if (_data.rowCount == 0) {
+                    return done([]);
+                }
+                else {
+                    return done (_data.rows);
+                }
+            }
+
+
+        );
+
+
+    }    
 
     
 }

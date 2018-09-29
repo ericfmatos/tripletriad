@@ -22,14 +22,23 @@ module.exports =  {
 
 
 
-    renderPage: function(response, language, gender, pageName, formData, resFile) {
+    renderPage: function(data) {
+       //data:   response, language, gender, pageName, formData, resFile, layout
 
-
-        response.pageInfo = languageController.loadRes('../views/' + (resFile || pageName) + '.res',language, gender, formData) || {};
-        if (formData) {
-            response.pageInfo.formData = formData;
+        data.response.pageInfo = languageController.loadRes(
+            '../views/' + (data.resFile || data.pageName) + '.res',
+            data.language,
+            data.gender, 
+            data.formData) || {};
+        
+        if (data.formData) {
+            data.response.pageInfo.formData = data.formData;
         }
-        response.render(pageName, response.pageInfo);
+        if (data.layout) {
+            data.response.pageInfo.layout =  data.layout;
+        }
+
+        data.response.render(data.pageName,  data.response.pageInfo);
 
     }
 }

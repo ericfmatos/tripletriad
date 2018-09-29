@@ -11,15 +11,3 @@
 }
 
 
-.card__img {
-    background-image: linear-gradient(to top, #334141, #5e6969, #8b9494, #bcc1c1, #eff0f0);
-}
-
-.card--mine .card__img {
-   background-image:   linear-gradient(to top, #2342bd, #5361c6, #7881cd, #9ba1d2, #bec1d6);
-}
-
-.card--other .card__img {
-    background-image: linear-gradient(to top, #fd1319, #ff5e4f, #ff8c80, #ffb7b0, #ffe0de);
- }
- 
