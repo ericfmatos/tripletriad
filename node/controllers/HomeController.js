@@ -1,5 +1,5 @@
 var controllerFunc = require('./common');
-var languageController = require('./language');
+var languageController = require('../core/language');
 var gameConfig = require('../config/game');
 var logger = require('../core/logger')
 var notificationHandler = require('../core/notification');
@@ -45,15 +45,15 @@ exports.Profile = function(request, response) {
 exports.Home = function(request, response){
     var user = request.session.passport.user;
     
+
     if (user.userid) {
         controllerFunc.renderPage(
             {
                 response,
                 language : user.language, 
                 gender   : user.gender, 
-                formData : user,
-                pageName : 'home/Home',
-                layout   : 'LoggedOn'
+                formData : { user },
+                pageName : 'home/Home'
             }
         );
 

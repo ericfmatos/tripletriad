@@ -1,5 +1,5 @@
 var controllerFunc = require('./common');
-var languageController = require('./language');
+var languageController = require('../core/language');
 var dbNotification = require('../db/user/notifications');
 var logger = require('../core/logger');
 var dbCards = require('../db/cards/cards');

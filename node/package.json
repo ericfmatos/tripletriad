@@ -10,6 +10,7 @@
         "passport": "*",
         "passport-google-oauth": "*",
         "pg": "*",
-        "body-parser": "*"
+        "body-parser": "*",
+        "fs": "*"
     }
 }

@@ -2,7 +2,7 @@ var dbCards = require('../db/cards/cards');
 var notificationHandler = require ('./notification');
 var commons = require('./common');
 var logger = require('./logger');
-var languageController = require('../controllers/language');
+var languageController = require('./language');
 
 module.exports = {
 
