@@ -11,7 +11,7 @@ exports.GetMyNotifications = function(request, response){
         err => 
         { 
             response.status(500);
-            logger.error(`could not send welcome notification to user ${data.userid}.`, {err, notificationData, data});
+            logger.error(`could not send welcome notification to user ${curUser.userid}.`, {err, curUser});
         },
         data => { 
             if (data) {

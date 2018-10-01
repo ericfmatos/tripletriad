@@ -15,12 +15,10 @@ exports.Index = function(request, response){
             
             controllerFunc.renderPage(
             {
+                request,
                 response,
-                language : user.language, 
-                gender   : user.gender, 
                 pageName : 'home/Cards',
                 formData : {cards:  user_cards.map(function(c){return `<li>${cardRes.drawSingleCard(c).card}</li>`}).join("") },
-                layout   : 'LoggedOn'
             }) ;
         }
     );

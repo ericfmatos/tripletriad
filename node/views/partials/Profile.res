@@ -9,7 +9,8 @@ module.exports = {
             'email'     : 'E-mail',
             'language'  : 'Language',
             'ok'        : 'Submit',
-            'nickname'  : 'Nickname'
+            'nickname'  : 'Nickname',
+            'return'    : 'Return'
         },
         
 
@@ -18,7 +19,8 @@ module.exports = {
             'email'         : 'E-mail',
             'language'      : 'Idioma',
             'ok'            : 'Enviar',
-            'nickname'      : 'Nickname'  
+            'nickname'      : 'Nickname' ,
+            'return'        : 'Voltar' 
         },
 
         'es': {
@@ -26,7 +28,8 @@ module.exports = {
             'email'         : 'Correo electrónico',
             'language'      : 'Idioma',
             'ok'            : 'Vale',
-            'nickname'      : 'Sobrenombre'
+            'nickname'      : 'Sobrenombre',
+            'return'        : 'Volver'
         },
 
         

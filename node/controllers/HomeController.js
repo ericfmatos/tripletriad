@@ -8,9 +8,9 @@ exports.Index = function(request, response){
 
     controllerFunc.renderPage(
         {
+            request,
             response,
             language : controllerFunc.matchLanguage(request.acceptsLanguages()),
-            gender   : 'male', 
             pageName : 'home/Index'
         }
     );
@@ -22,20 +22,11 @@ exports.Profile = function(request, response) {
     var user = request.session.passport.user;
     
     var renderData = {
+        request,
         response,
-        language : user.language, 
-        gender   : user.gender, 
-        formData : user,
-        resFile  : 'home/NewUser'
+        pageName : user.userid ? 'home/Profile' : 'home/NewUser'
     }
 
-
-    if (user.userid) {
-        renderData.pageName = 'home/Profile';
-    }
-    else {
-        renderData.pageName = 'home/NewUser';
-    }
 
     controllerFunc.renderPage(renderData);
 
@@ -49,10 +40,8 @@ exports.Home = function(request, response){
     if (user.userid) {
         controllerFunc.renderPage(
             {
+                request,
                 response,
-                language : user.language, 
-                gender   : user.gender, 
-                formData : { user },
                 pageName : 'home/Home'
             }
         );
@@ -80,6 +69,7 @@ exports.Home = function(request, response){
     else {
         controllerFunc.renderPage(
             {
+                request,
                 response,
                 language : user.language, 
                 gender   : user.gender, 

@@ -30,12 +30,17 @@ app.use(session({
 
 
 const publicPath = path.join(__dirname, '../views');
+var partialsDir = path.join( viewsDir, 'partials');
 
-hbs = handlebars.create({
-   defaultLayout: 'main',
-   layoutsDir   :  path.join(viewsDir, 'layouts'),
-   partialsDir  :  path.join( viewsDir, 'partials')
-});
+var handlebarsData = {
+  defaultLayout: 'main',
+  layoutsDir   :  path.join(viewsDir, 'layouts'),
+  partialsDir  :  partialsDir
+}
+
+hbs = handlebars.create(handlebarsData);
+var Handlebars = hbs.handlebars;
+Handlebars.dirs = handlebarsData;
 
 
 function replaceExt(filePath, newExt) {
@@ -44,20 +49,34 @@ function replaceExt(filePath, newExt) {
 }
 
 
+function getResData(resName, context ) {
+  if (fs.existsSync(resName)) {
+    var resData = multilang.loadRes(resName, context._settings.language || '', context._settings.gender || '', context.formData); 
+    Object.assign(context, resData);
+  
+  }
+  return context;
+}
 var hbs_render = hbs.__proto__.render;
 hbs.__proto__.render = function (filePath, context, options) {
 
   var resName =  replaceExt(filePath, 'res');
-  if (fs.existsSync(resName)) {
-    var resData = multilang.loadRes(resName, context.settings.language || '', context.settings.gender || '', context.formData); 
-    Object.assign(context, resData);
-  }
-
-  
+  getResData(resName, context);
+   
 
   return hbs_render.call(hbs, filePath, context, options);
 }
 
+
+Handlebars.VM.invokePartialOrigin = Handlebars.VM.invokePartial;
+Handlebars.VM.invokePartial = function (partial, name, context, helpers, partials, data, depths) {
+
+  var resName = path.join(Handlebars.dirs.partialsDir, name) + ".res";
+  getResData(resName, context);
+  
+  
+  return Handlebars.VM.invokePartialOrigin.call(Handlebars.VM, partial, name, context, helpers, partials, data, depths);
+};
  
 //app.engine('handlebars', handlebars({partialsDir: path.join(__dirname, 'views/partials')}));
 

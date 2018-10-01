@@ -2,21 +2,21 @@
     <form accept-charset="UTF-8" action="./create_user/" method="post">
         <div class="form-group">
             <label for="name">{{fullname}}</label>
-		    <input class="form-control" name="name" required placeholder="{{fullname}}" value="{{formData.name}}" type="text"> 
+		    <input class="form-control" name="name" required placeholder="{{fullname}}" value="{{formData.user.name}}" type="text"> 
         </div>
         
         <div class="form-group">
             <label for="nickname">{{nickname}}</label>
-		    <input class="form-control" name="nickname" required placeholder="{{nickname}}" value="{{formData.nickname}}" type="text"> 
+		    <input class="form-control" name="nickname" required placeholder="{{nickname}}" value="{{formData.user.nickname}}" type="text"> 
         </div>
         
         <div class="form-group">
             <label for="email">{{email}}</label>
-            <input class="form-control" name="email" required placeholder="{{email}}" type="email" value="{{formData.email}}">
+            <input class="form-control" name="email" required placeholder="{{email}}" type="email" value="{{formData.user.email}}">
         </div>
         <div class="form-group">
             <label for="language">{{language}}</label>
-            <select name="language" required data-val="{{formData.language}}" class="form-control">
+            <select name="language" required data-val="{{formData.user.language}}" class="form-control">
                 <option value="pt_BR" >Português (Brasil)</option>
                 <option value="en" selected>English</option>
                 <option value="es">Español</option>

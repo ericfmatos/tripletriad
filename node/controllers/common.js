@@ -26,10 +26,11 @@ module.exports =  {
 
 
     renderPage: function(data) {
-       //data:   response, language, gender, pageName, formData, resFile, layout
-
+       //data:   request, response, pageName, formData, resFile, layout
 
        data.response.pageInfo = {};
+
+       
         /*data.response.pageInfo = languageController.loadRes(
             '../views/' + (data.resFile || data.pageName) + '.res',
             data.language,
@@ -39,14 +40,22 @@ module.exports =  {
         if (data.formData) {
             data.response.pageInfo.formData = data.formData;
         }
-        
-        data.response.pageInfo.settings = {
-            language: data.language || DEF_LANGUAGE,
-            gender  : data.gender   || DEF_GENDER
+        else {
+            data.response.pageInfo.formData = {};
         }
-        /*if (data.layout) {
-            data.response.pageInfo.layout =  data.layout;
-        }*/
+       
+        var user = {};
+
+        if (data.request && data.request.session && data.request.session.passport && data.request.session.passport.user) {
+            user = data.request.session.passport.user;
+            data.response.pageInfo.formData.user = user;
+        }
+   
+
+        data.response.pageInfo._settings = {
+            language: data.language || user.language || DEF_LANGUAGE,
+            gender  : data.gender   || user.gender   || DEF_GENDER
+        }
 
         data.response.render(data.pageName,  data.response.pageInfo);
 
