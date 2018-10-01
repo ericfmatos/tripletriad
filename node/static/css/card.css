@@ -1,4 +1,160 @@
-.card {
+.card{
+    margin: 20px;
+    padding: 12px;
+    width: 150px;
+    height: 220px;
+    border: 1px solid black;
+    position: relative;
+    background-color: white;
+    -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    margin: 4px;
+    border: 1px solid #55555585;
+    font-size: 10px;    
+  }
+  
+  
+  .corner {
+    position: absolute;
+    float: right;
+    
+    border-radius: 100%;
+
+    text-align: center;
+    vertical-align: middle;
+    height: 28px;
+    width: 28px;
+    line-height: 28px;
+    
+    background-color: white;
+    box-sizing: border-box;
+
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 2em;
+    
+  }
+  .level-caption {
+      font-size: 7pt;
+      font-weight: 100;
+      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+  }
+
+  .corner.level {
+    top: 0;
+    right: 0;
+        
+    font-weight: bold;
+  }
+  
+  
+  .corner.cardid {
+    left: 0;
+    bottom: 0;
+    font-size: 1.5em;
+
+  }
+  
+
+  
+  .border{
+    border: 2px solid black;
+    width: 100%;
+        height: 100%;
+      box-sizing: border-box;
+      border-radius: 8px;
+  }
+  
+  .gambi{
+        position:absolute;
+      width:17px;
+      height:17px;
+      transition:background-color 0.2s ease-in-out;
+  }
+  
+  .gambiright{
+      top:14px;
+      right:14px;
+      background-color:red;
+      border-radius:0 0 0 100%;
+  }
+  
+  
+  .gambileft{
+    
+    bottom:14px;
+      left:14px;
+      background-color:red;
+      border-radius:0 100%  0 0;
+  }
+
+
+  .card--mine .border{
+    border-color: #2643bd;
+  }
+
+.card--mine .corner {
+    color: #2643bd;
+}
+
+  .card--mine .gambiright, .card--mine .gambileft{
+    background-color:#2643bd;
+}
+
+  .card--other .border{
+    border-color: #2643bd; /*//TODO*/
+  }
+
+  .card--other .gambiright, .card--other .gambileft{
+    background-color:#2643bd; /*//TODO*/
+}
+
+
+
+.header{
+    letter-spacing: 0.5px;
+    font-size: 1.1em;
+    padding: 0 4px;
+    font-weight: bold;
+}
+
+.card-image {
+    text-align: center;
+    display: block;
+    vertical-align: middle;
+    height: 155px;
+    line-height: 155px;
+}
+
+.footer {
+    text-align: right;
+    font-size: 0.9em;
+    font-style: italic;
+    padding: 0 4px;
+}
+
+
+.card__numbers {
+    position: absolute;
+    top: 32px;
+    font-size: 2em;
+    font-family: 'Times New Roman';
+    color: white;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    font-weight: bold;
+    line-height: 1;
+    text-align: center;
+    padding: 0 4px;
+}
+
+.card__numbers span:first-child, .card__numbers span:last-child {
+    display: block;
+} 
+
+.card__numbers span:first-child + span {
+    margin-right: 10px;
+}
+
+/*.card {
     text-align: center;
     border-radius: 10px;
     -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
@@ -98,4 +254,4 @@ span.card__deck {
 .card--other {
     background-image: linear-gradient(to top, #fd1319, #ff5e4f, #ff8c80, #ffb7b0, #ffe0de);
  }
- 
+ */

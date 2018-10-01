@@ -18,7 +18,8 @@ exports.Index = function(request, response){
                 request,
                 response,
                 pageName : 'home/Cards',
-                formData : {cards:  user_cards.map(function(c){return `<li>${cardRes.drawSingleCard(c).card}</li>`}).join("") },
+                //formData : {cards:  user_cards.map(function(c){return `<li>${cardRes.drawSingleCard(c).card}</li>`}).join("") },
+                formData: { user_cards } 
             }) ;
         }
     );
