@@ -86,7 +86,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'static')));
 
 
-http.createServer(app).listen(app.get('port'), function(){
+var httpServer = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
@@ -96,9 +96,4 @@ app.use(passport.session());
 // send app to router
 require('./router')(app, passport);
 
-
-
-/*ExpressHandlebars.prototype.render = function (filePath, context, options) {
-  options || (options = {});
-}*/
-
+require('./websocket')(app, httpServer );

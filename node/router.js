@@ -2,7 +2,7 @@
 var HomeController = require('./controllers/HomeController');
 var NotificationController = require('./controllers/NotificationController');
 var CardsController = require('./controllers/CardsController');
-
+var PlayController = require('./controllers/PlayController');
 
 
 // Routes
@@ -48,6 +48,9 @@ module.exports = function(app, passport){
     app.get(routerFolder +'updates', isLoggedIn, NotificationController.GetMyNotifications);
     app.post(routerFolder +'setRead', isLoggedIn, NotificationController.NotificationRead);
 
+
+    routerFolder = '/play/';
+    app.get(routerFolder +'tutorial', isLoggedIn, PlayController.Tutorial);
 
    // =====================================
     // GOOGLE ROUTES =======================

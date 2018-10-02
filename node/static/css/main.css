@@ -17,6 +17,10 @@ body {
     font-family: 'Poppins-Regular', 'Poppins-Thin', Arial, Helvetica, sans-serif;
 }
 
+.profile-menu .dropdown{
+    width:300px;    
+}
+
 header {
     width: 100%;
     background-color: white;
@@ -78,7 +82,7 @@ footer img.dev {
     background:#fff;
     border:1px solid #ccc;
     border-radius:4px;
-    width:300px;    
+    
 }
 .dropdown-menu>li>a {
     color:#428bca;
@@ -86,7 +90,7 @@ footer img.dev {
 .dropdown ul.dropdown-menu {
     border-radius:4px;
     box-shadow:none;
-    margin-top:20px;
+    margin-top:10px;
     width:300px;
 }
 .dropdown ul.dropdown-menu:before {
@@ -146,13 +150,13 @@ legend {
     color:#636363;
 }
 
-.game-main-menu li {
+.game-main-menu > li {
     border: 1px solid #428bca;
     border-radius: 4px;
     background-color: transparent;
 }
 
-.game-main-menu li a:hover {
+.game-main-menu > li a:hover {
     background-color: #f0f8ff9e;
 }
 
