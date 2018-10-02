@@ -14,8 +14,8 @@ module.exports = {
         
         var notificationData = {
             userid: data.userid,
-            title: data.title,
-            message: data.message,
+            title: data.title.replace(/'/g, "''"),
+            message: data.message.replace(/'/g, "''"),
             level: data.level
         };
         dbNotification.sendNotification(

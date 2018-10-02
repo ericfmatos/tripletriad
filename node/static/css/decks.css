@@ -1,13 +1,16 @@
-.card-deck--ffviii .card__header {
-    background-color: #2946bd;
-
+ 
+.card-deck--ffviii .card__header,
+.deck--ffviii .deck__title {
+    background-color: #2E4271;
 }
 
+.deck--ffviii .deck__data {
+    border-bottom-color: #2E4271;
+}
 
 .card-deck--ffviii span.card__level__value {
-    color: #2946bd;
-    border: 1px solid #2946bd;
-
+    color: #2E4271;
+    border-color: #2E4271;
 }
 
 

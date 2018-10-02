@@ -1,3 +1,5 @@
+
+
 .card{
     margin: 20px;
     padding: 12px;
@@ -11,6 +13,9 @@
     margin: 4px;
     border: 1px solid #55555585;
     font-size: 10px;    
+    font-family: 'Poppins Regular', Arial, Helvetica, sans-serif;
+    display: inline-block;
+    user-select: none;
   }
   
   
@@ -29,14 +34,13 @@
     background-color: white;
     box-sizing: border-box;
 
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 2em;
     
   }
   .level-caption {
       font-size: 7pt;
       font-weight: 100;
-      font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+      font-family: 'Poppins-Thin', 'Poppins-Regular', Arial, Helvetica, sans-serif;
   }
 
   .corner.level {
@@ -51,7 +55,6 @@
     left: 0;
     bottom: 0;
     font-size: 1.5em;
-
   }
   
 
@@ -89,23 +92,27 @@
 
 
   .card--mine .border{
-    border-color: #2643bd;
+    border-color: #2E4271;
   }
 
 .card--mine .corner {
-    color: #2643bd;
+    color: #2E4271;
 }
 
   .card--mine .gambiright, .card--mine .gambileft{
-    background-color:#2643bd;
+    background-color:#2E4271;
 }
 
   .card--other .border{
-    border-color: #2643bd; /*//TODO*/
+    border-color: #7F1616; 
   }
 
+  .card--other .corner {
+    color: #7F1616;
+}
+
   .card--other .gambiright, .card--other .gambileft{
-    background-color:#2643bd; /*//TODO*/
+    background-color:#7F1616; 
 }
 
 
@@ -114,7 +121,7 @@
     letter-spacing: 0.5px;
     font-size: 1.1em;
     padding: 0 4px;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .card-image {
@@ -128,14 +135,15 @@
 .footer {
     text-align: right;
     font-size: 0.9em;
-    font-style: italic;
+    font-family: 'Poppins-Thin', 'Poppins-Regular', Arial, Helvetica, sans-serif;
+    font-weight: 100;
     padding: 0 4px;
 }
 
 
 .card__numbers {
     position: absolute;
-    top: 32px;
+    top: 36px;
     font-size: 2em;
     font-family: 'Times New Roman';
     color: white;

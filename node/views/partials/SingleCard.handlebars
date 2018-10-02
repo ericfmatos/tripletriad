@@ -1,0 +1,36 @@
+{{#with user_card}}
+
+<div class="card card-deck--{{card.deck.style}} card--mine">
+
+    <div class="gambi gambiright">
+    </div>
+    <div class="gambi gambileft">
+    </div>
+    <div class="level corner"><span class="level-caption">{{../text_level}} </span>{{card.level}}</div>
+    
+    <div class="cardid corner"><span class="level-caption">#</span>{{card.cardid}}</div>
+    
+    <div class="border">
+        
+        <div class="header">
+            <span>{{card.name}}</span>
+        </div>
+
+        <div class="card__numbers">
+            {{#each numbers}}    
+                <span>{{this}}</span>
+            {{/each}}
+            
+        </div>
+
+        <div class="card-image">
+                <img src="/img/cards/{{card.deck.folder}}/{{card.img}}.png">
+        </div>
+
+        <div class="footer">
+            <span>{{card.deck.name}}</span>
+        </div>
+
+    </div>
+</div>
+{{/with}}

@@ -2,6 +2,68 @@ var pgClient = require("../connection");
 
 module.exports = {
 
+    listDecks: function(err, done) {
+        var query = `SELECT * FROM ${pgClient.schema}.decks order by name;`;
+
+        var conn = pgClient.execQuery(
+            query,
+            _err => err(_err),
+            _data => {
+                if (_data.rowCount == 0) {
+                    return done([]);
+                }
+                else {
+                    return done (_data.rows);
+                }
+            }
+
+
+        );
+
+    },
+
+    listAvailCardsFromDeck: function (data, err, done){
+        var where = [];
+        if (data.level) {
+            where.push(`A.level = ${data.level}`);
+        }
+        if (data.deck) {
+            where.push(`A.deckid = ${data.deck}`);
+        }
+        if (data.minrarity) {
+            where.push(`A.rarity >= ${data.minrarity}`);
+        }
+        if (data.maxrarity) {
+            where.push(`A.rarity <= ${data.maxrarity}`);
+        }
+        if (data.userid) {
+            where.push(`A.cardid not in (select cardid from ${pgClient.schema}.user_cards where userid = ${data.userid})`);
+        }
+
+        var query = `SELECT A.*, to_json(D) as deck FROM ${pgClient.schema}.cards A inner join ${pgClient.schema}.decks D on a.deckid = D.deckid `;
+        if (where.length) {
+            query = query + ' WHERE ' +  where.join(" and ");
+        }
+        query = query + ';';
+
+
+        var conn = pgClient.execQuery(
+            query,
+            _err => err(_err),
+            _data => {
+                if (_data.rowCount == 0) {
+                    return done([]);
+                }
+                else {
+                    return done (_data.rows);
+                }
+            }
+
+
+        );
+
+    },
+    
     listCardsFromDeck: function(data , err, done) {
         
         var where = [];
@@ -65,6 +127,31 @@ module.exports = {
         }
     },
 
+    listUserCardsFromDeck:  function(data , err, done) {
+        var query = `select a.*, row_to_json(b) as card from ${pgClient.schema}.user_cards a inner join
+                            (select card.*, row_to_json(deck) as deck from ${pgClient.schema}.cards card 
+                            inner join ${pgClient.schema}.decks deck on card.deckid = deck.deckid 
+                            where deck.deckid = ${data.deckid}) b
+                            on a.cardid = b.cardid
+                            where a.userid = ${data.userid} 
+                    order by a.cardid;`;
+
+        var conn = pgClient.execQuery(
+            query,
+            _err => err(_err),
+            _data => {
+                if (_data.rowCount == 0) {
+                    return done([]);
+                }
+                else {
+                    return done (_data.rows);
+                }
+            }
+
+
+        );
+
+    },
 
     listUserCards: function(userid, err, done) {
 

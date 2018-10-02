@@ -1,6 +1,18 @@
+@font-face{
+    font-family: 'Poppins Regular';
+    src: url('../fonts/Poppins-Regular.woff');
+}
+
+@font-face{
+    font-family: 'Poppins Thin';
+    src: url('../fonts/Poppins-Thin.woff');
+}
+
+
 
 body {
     background:#f0f0f0;
+    font-family: 'Poppins-Regular', 'Poppins-Thin', Arial, Helvetica, sans-serif;
 }
 
 header {
@@ -10,6 +22,7 @@ header {
     margin-bottom: 8px;
     vertical-align: middle;
     height: 74px;;
+    position: fixed;
 }
 header span.version {
     font-size: 0.6em;
@@ -32,11 +45,24 @@ footer {
     width: 100%;
     padding: 4px;
     margin-top: 8px;
+    position: fixed;
 }
+
 
 footer img.dev {
     float: right;
 }
+
+.content {
+    overflow-y: auto;
+    max-height: 100%;
+    position: absolute;
+    top: 74px;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+}
+
 
 .profile-menu {
     top:10px;
@@ -147,4 +173,13 @@ legend {
     max-width: 80%;
     min-width: 600px;
     width: auto;
+}
+
+ul.cards {
+    list-style: none;
+    padding: 0;
+}
+
+ul.cards > li {
+    display: inline-block;
 }

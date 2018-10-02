@@ -34,6 +34,11 @@ module.exports = function(app, passport){
 
 
     app.get('/cards', isLoggedIn,  CardsController.Index);
+    
+
+    routerFolder = '/cards/';
+    app.get(routerFolder + 'listMyCardsFromDeck', isLoggedIn, CardsController.ListUserCardsFromDeck);
+    app.post(routerFolder + 'renderCards', isLoggedIn, CardsController.RenderCards)
 
 /***
  *  routes to client interaction

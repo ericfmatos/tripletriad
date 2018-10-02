@@ -43,6 +43,10 @@ module.exports =  {
         else {
             data.response.pageInfo.formData = {};
         }
+
+        if (data.isPartial) {
+            data.response.pageInfo.layout = false;
+        }
        
         var user = {};
 

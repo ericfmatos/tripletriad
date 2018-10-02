@@ -7,23 +7,24 @@ var logger = require('../core/logger');
 exports.GetMyNotifications = function(request, response){
     var curUser = request.session.passport.user;
     
-    dbNotification.getMyNotifications(curUser.userid, 
-        err => 
-        { 
-            response.status(500);
-            logger.error(`could not send welcome notification to user ${curUser.userid}.`, {err, curUser});
-        },
-        data => { 
-            if (data) {
-                return response.json(data);
+    if (curUser.userid) {
+        dbNotification.getMyNotifications(curUser.userid, 
+            err => 
+            { 
+                response.status(500);
+                logger.error(`could not send welcome notification to user ${curUser.userid}.`, {err, curUser});
+            },
+            data => { 
+                if (data) {
+                    return response.json(data);
+                }
+                else {
+                    return response.json({success: true});
+                }
+            
             }
-            else {
-                return response.json({success: true});
-            }
-           
-        }
-        );  
-    
+            );  
+    }
 };
  
 exports.NotificationRead = function(request, response) {

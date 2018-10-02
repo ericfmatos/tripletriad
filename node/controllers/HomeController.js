@@ -53,10 +53,12 @@ exports.Home = function(request, response){
             
             //user, count, level, deckid
             cardHandler.createCards({
-                user    : user,
-                count   : gameConfig.initialCards.count,
-                level   : gameConfig.initialCards.level,
-                deckid  : gameConfig.initialCards.deckid
+                user      : user,
+                count     : gameConfig.initialCards.count,
+                level     : gameConfig.initialCards.level,
+                deckid    : gameConfig.initialCards.deckid,
+                minrarity : gameConfig.initialCards.rarity,
+                maxrarity : gameConfig.initialCards.rarity,
             },
             _err => logger.critical(`could not create cards for userid ${user.userid}`, {_err, user}), 
             _cards => {
@@ -73,7 +75,6 @@ exports.Home = function(request, response){
                 response,
                 language : user.language, 
                 gender   : user.gender, 
-                formData : user,
                 pageName : 'home/NewUser'
             }
         );

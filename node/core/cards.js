@@ -8,10 +8,13 @@ module.exports = {
 
     //user, count, level, deckid
     createCards: function( data, err, done ) {
-        dbCards.listCardsFromDeck(
+        dbCards.listAvailCardsFromDeck(
             {
-                level   : data.level,
-                deck    : data.deckid
+                level     : data.level,
+                deck      : data.deckid,
+                userid    : data.user.userid,
+                minrarity : data.minrarity,
+                maxrarity : data.maxrarity
             },
             _err => err(_err),
             _res => {

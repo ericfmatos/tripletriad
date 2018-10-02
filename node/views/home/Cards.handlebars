@@ -2,43 +2,11 @@
  <link rel="stylesheet" type="text/css" href="css/card.css">
  <link rel="stylesheet" type="text/css" href="css/decks.css">
 
-<ul>
+<ul class="cards">
     {{#each formData.user_cards}}
         <li>
             
-                <div class="card card-deck--{{this.card.deck.style}} card--mine">
-
-                    <div class="gambi gambiright">
-                    </div>
-                    <div class="gambi gambileft">
-                    </div>
-                    <div class="level corner"><span class="level-caption">{{../text_level}} </span>{{this.card.level}}</div>
-                    
-                    <div class="cardid corner">#{{this.card.cardid}}</div>
-                    
-                    <div class="border">
-                        
-                        <div class="header">
-                            <span>{{this.card.name}}</span>
-                        </div>
-
-                        <div class="card__numbers">
-                            {{#each this.numbers}}    
-                                <span>{{this}}</span>
-                            {{/each}}
-                            
-                        </div>
-
-                        <div class="card-image">
-                             <img src="/img/cards/{{this.card.deck.folder}}/{{this.card.img}}.png">
-                        </div>
-
-                        <div class="footer">
-                            <span>{{this.card.deck.name}}</span>
-                        </div>
-
-                    </div>
-                </div>
+                {{> SingleCard user_card=this _settings=../_settings}}
             
         </li>
 

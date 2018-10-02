@@ -1,0 +1,30 @@
+ul.decks{
+    list-style: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+li .deck {
+    margin: 12px 0;
+}
+
+.deck__title{
+    cursor: pointer;
+    border-top-right-radius: 80px;
+    border-bottom-right-radius: 80px;
+
+    color: white;
+    background-color: #2E4271;
+    padding: 16px 32px 16px 8px;
+    width: 240px;
+    display: block;
+}
+
+.deck__title:hover{
+    font-weight: bold;
+}
+
+.deck__data {
+    padding-bottom: 8px;
+    border-bottom: 1px solid black;
+}
