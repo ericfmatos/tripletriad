@@ -6,7 +6,7 @@ module.exports = {
         
         var query = `INSERT INTO ${pgClient.schema}.log (log_level, message, json_data) 
                     values
-                    (${data.level}, '${data.message}', '${JSON.stringify((data.data || {}))}');`;
+                    (${data.level}, '${data.message.replace(/'/g, "''")}', '${JSON.stringify((data.data || {})).replace(/'/g, "''")}');`;
 
         var conn = pgClient.execQuery(
             query,

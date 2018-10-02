@@ -47,13 +47,14 @@ module.exports = {
 
 
 function scriptToShowCards(cards) { 
-    //TODO nao consegui fazer funcionar isso.
     return { text :
     ` 
 
         <script type="text/javascript">
+        var data = ${JSON.stringify( cards) };
+        console.log(data);
         $.post('/cards/renderCards',
-            ${JSON.stringify( cards) },
+            {cards: data},
             function(data, status) {
                 if (data) {
                     $(".new-cards").html(data);

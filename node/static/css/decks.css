@@ -13,4 +13,6 @@
     border-color: #2E4271;
 }
 
-
+.card-deck--ffviii .border{
+    background-color: #F3F4F8;
+}
