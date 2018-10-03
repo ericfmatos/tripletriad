@@ -2,6 +2,7 @@
 .card-deck--ffviii .card__header,
 .deck--ffviii .deck__title {
     background-color: #2E4271;
+    color: white;
 }
 
 .deck--ffviii .deck__data {

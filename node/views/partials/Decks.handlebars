@@ -1,0 +1,23 @@
+
+ <link rel="stylesheet" type="text/css" href="/css/decks.css">
+
+<ul class="decks">
+    {{#each formData.decks}}
+        <li>
+
+            <div class="deck deck--{{this.style}}" data-id="{{this.deckid}}">
+
+                <span class="deck__title">{{this.name}}</span>
+
+                <div class="deck__data hidden">
+                    
+                </div>
+
+            </div>
+            
+        </li>
+
+    {{/each}}
+</ul>
+
+<script src="/js/decks.js"></script>

@@ -1,0 +1,49 @@
+.content {
+    font-family: 'Poppins Regular', Arial, Helvetica, sans-serif;
+    
+}
+
+.tutorial__header {
+    padding: 8px 20px;
+}
+
+p.tutorial-start {
+    font-weight: bold;
+    margin:  0;
+    font-size: 1.2em;
+}
+
+ul.decks {
+    list-style: none;
+    padding: 0;
+    margin-top: 12px;
+    max-height: 260px;
+    overflow-y: auto;
+}
+
+ul.decks .deck__data {
+    padding: 8px 2px;
+}
+
+.deck__title {
+    padding: 4px 24px 4px 4px;
+    cursor: pointer;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+
+.card.toggled {
+    outline: 2px solid blue;
+    top: -4px;
+}
+
+.card-counter {
+    font-size: 0.8em;
+    font-style: italic;
+    margin-left: 12px;
+}
+
+.user-may-start  {
+    padding: 8px 20px;
+}

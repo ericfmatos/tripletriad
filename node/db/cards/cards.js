@@ -3,21 +3,21 @@ var pgClient = require("../connection");
 module.exports = {
 
     listDecks: function(err, done) {
-        var query = `SELECT * FROM ${pgClient.schema}.decks order by name;`;
-
-        var conn = pgClient.execQuery(
-            query,
+        pgClient.simpleQuery( `SELECT * FROM ${pgClient.schema}.decks order by name;`,
             _err => err(_err),
-            _data => {
-                if (_data.rowCount == 0) {
-                    return done([]);
-                }
-                else {
-                    return done (_data.rows);
-                }
-            }
+            _data => done(_data)
+        );
 
+    },
 
+    listUserDecks: function (userid, err, done) {
+        pgClient.simpleQuery( `SELECT * FROM ${pgClient.schema}.decks WHERE deckid in 
+                                    (select deckid from ${pgClient.schema}.cards a inner join ${pgClient.schema}.user_cards b on a.cardid = b.cardid and 
+                                        b.userid = ${userid}
+                                    ) 
+                               order by name;`,
+            _err => err(_err),
+            _data => done(_data)
         );
 
     },

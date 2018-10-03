@@ -1,1 +1,25 @@
+ <link rel="stylesheet" type="text/css" href="/css/tutorial.css">
+
+<div class="tutorial">
+    <div class="tutorial__header">
+        <p class="tutorial-start">{{starting}}</p>
+
+        <span>{{starting-desc}}</span>
+    </div>
+    {{> Decks}}
+</div>
+
+<div class="user-may-start hidden">
+    <p>{{mayStart}}</p>
+    <button type="button" class="btn btn-primary">{{start}}</button>
+</div>
+
+<div class="hidden" id="textSamples">
+    <span id="sampleCardCounter">{{selectedCards}}</span>
+    <span id="cannotMore5">{{cannotMore5}}</span>
+    <span id="txtOk">{{ok}}</span>
+    <span id="txtCannot">{{cannot}}</span>
+</div>
+
 <script src="/js/play/socket.js"></script>
+<script src="/js/play/tutorial.js"></script>

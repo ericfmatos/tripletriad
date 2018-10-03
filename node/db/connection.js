@@ -82,6 +82,23 @@ module.exports =  {
             
     },
 
+    simpleQuery: function (query, err, done) {
+        var conn = this.execQuery(
+            query,
+            _err => err(_err),
+            _data => {
+                if (_data.rowCount == 0) {
+                    return done([]);
+                }
+                else {
+                    return done (_data.rows);
+                }
+            }
+
+
+        );
+    },
+
     
     schema: pgConfig.pgConn.schema
 

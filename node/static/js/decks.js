@@ -2,6 +2,10 @@ Decks = function() {
 
     var elements = {};
 
+    var loadDeckCallback = function() {
+
+    }
+
 
     function showDeck(deckData, deckid) {
         
@@ -12,7 +16,8 @@ Decks = function() {
                 deckData.html(data);
 
                 deckData.removeClass("hidden");
-
+                
+                loadDeckCallback(deckData.closest(".deck"));
                 
             }
         });
@@ -46,13 +51,19 @@ Decks = function() {
         })
     }
 
-    start = function() {
+    var setLoadDeckCallback = function(v) {
+        loadDeckCallback = v;
+    }
+
+
+    var start = function() {
         loadElements();
         addListeners();
     }
 
     return {
-        start
+        start,
+        setLoadDeckCallback
     }
 }();
 

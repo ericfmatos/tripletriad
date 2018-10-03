@@ -9,7 +9,10 @@ var NotificationHandler = function() {
         EMAIL: 3
     };
 
+    const INTERVAL = 10000;
+
     var elements = {};
+    var timer = {};
 
     function removeNotificationSign() {
 
@@ -96,7 +99,7 @@ var NotificationHandler = function() {
 
     function startTimer(){
         timerExecution();
-        setInterval(timerExecution, 10000);
+        timer = setInterval(timerExecution, INTERVAL);
     }
 
     var start = function() {
@@ -106,8 +109,18 @@ var NotificationHandler = function() {
         startTimer();
     }
 
+    var pause = function() {
+        clearInterval(timer);
+    }
+
+    var resume = function() {
+        timer = setInterval(timerExecution, INTERVAL);
+    }
+
     return  {
-        start
+        start,
+        pause,
+        resume
     }
 
     

@@ -3,8 +3,8 @@
 .card{
     margin: 20px;
     padding: 12px;
-    width: 150px;
-    height: 220px;
+    width: 140px;
+    height: 210px;
     border: 1px solid black;
     position: relative;
     background-color: white;
@@ -62,9 +62,9 @@
   .border{
     border: 2px solid black;
     width: 100%;
-        height: 100%;
-      box-sizing: border-box;
-      border-radius: 8px;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 8px;
   }
   
   .gambi{
@@ -129,15 +129,15 @@
     text-align: center;
     display: block;
     vertical-align: middle;
-    height: 160px;
-    line-height: 160px;
+    height: 150px;
+    line-height: 150px;
     padding-left: 18px;
     padding-right: 2px;
 }
 
 .card-image img {
-    max-width: 100px;
-    max-height: 150px;
+    max-width: 90px;
+    max-height: 140px;
 }
 
 .footer {
