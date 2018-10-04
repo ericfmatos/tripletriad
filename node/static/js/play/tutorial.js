@@ -81,6 +81,10 @@ var TutorialHandler = function() {
         texts.cannotMore5 = elements.texts.find("#cannotMore5").text();
         texts.ok = elements.texts.find("#txtOk").text();
         texts.cannot = elements.texts.find("#txtCannot").text();
+        texts.starting = {
+            title : elements.texts.find("#tutorialStart").text(),
+            desc : elements.texts.find("#startingDesc").text()
+        };
     }
 
 
@@ -100,6 +104,8 @@ var TutorialHandler = function() {
         loadTexts();
 
         addNewElements();
+
+        $.toast(`<p>${texts.starting.title}</p>${texts.starting.desc}`);
     }
 
 

@@ -9,7 +9,11 @@ module.exports = {
                 'cards'     : 'My Cards',
                 'exchange'  : 'Exchange My Points',
                 'shop'      : 'Shop',
-                'tutorial'  : 'Tutorial'
+                'tutorial'  : 'Tutorial',
+                'practice'  : 'Practice',
+                'single_game': 'Single Game',
+                'championship': "Championship"
+
             },
 
             'pt': {
@@ -17,8 +21,10 @@ module.exports = {
                 'cards'     : 'Minhas cartas',
                 'exchange'  : 'Trocar meus pontos',
                 'shop'      : 'Loja',
-                'tutorial'  : 'Tutorial'
-
+                'tutorial'  : 'Tutorial',
+                'practice'  : 'Treinar',
+                'single_game': 'Partida',
+                'championship': "Campeonato"
             },
 
             'es': {
@@ -26,7 +32,10 @@ module.exports = {
                 'cards'     : 'Mis cartas',
                 'exchange'  : 'Canjear mis puntos',
                 'shop'      : 'Tienda',
-                'tutorial'  : 'Tutorial'
+                'tutorial'  : 'Tutorial',
+                'practice'  : 'Entrenar',
+                'single_game': 'Partido',
+                'championship': "Campeonato"
 
             }
 

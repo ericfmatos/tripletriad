@@ -156,7 +156,7 @@ legend {
     background-color: transparent;
 }
 
-.game-main-menu > li a:hover {
+.game-main-menu > li > a:hover {
     background-color: #f0f8ff9e;
 }
 
@@ -187,4 +187,31 @@ ul.cards {
 
 ul.cards > li {
     display: inline-block;
+}
+
+ul.square-buttons {
+    list-style: none;
+    padding: 8px;
+    text-align: center;
+}
+
+ul.square-buttons > li {
+    width: 120px;
+    height: 120px;
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+ul.square-buttons > li:last-child {
+    margin: 0;
+}
+
+
+ul.square-buttons > li > a > i {
+    display: block;
+    font-size: 2em;
+    width: 100px;
+    padding: 20px;
 }
