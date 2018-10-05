@@ -105,7 +105,8 @@ var TutorialHandler = function() {
 
         addNewElements();
 
-        $.toast(`<p>${texts.starting.title}</p>${texts.starting.desc}`);
+       var myBanner = $.banner({type: 'success', timer:10000, title: texts.starting.title, text: texts.starting.desc, container: ".banner-container"})
+       myBanner.show();
     }
 
 
