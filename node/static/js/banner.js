@@ -5,15 +5,20 @@ var Banner = {
 
     owner: {},
 
+    refactor:function() {
+        this.options.container.find(".banner--visible").each(function (i, a) { $(a).css("top",i*84 + (i == 0? 0 : 12)) });
+    },
+
     show: function() {
         if (this.el) {
             var master = this;
-            var content = this.el.find("span");
-            content.css("display", "none");
+            this.el.addClass("banner--visible");
+
+            this.refactor();
+
             this.el.animate(
                 {left: "10%"}, 
                 { complete: function(){ 
-                    content.css("display", "");
                     if (master.options.onShow) {
                         master.options.onShow(master);
                     }
@@ -29,13 +34,16 @@ var Banner = {
     hide: function() {
         if (this.el) {
             var master = this;
+            this.el.removeClass("banner--visible");
+            
             this.el.animate(
                 {'left' : "100%"},
                 { complete: function(){ 
+                    master.refactor();
                     if (master.options.onHide) {
                         master.options.onHide(master);
                     }
-                    if (master.options.destroyWhenHide || true) {
+                    if (master.options.destroyWhenHide) {
                         master.dispose();
                     }
                 }
@@ -64,10 +72,12 @@ var Banner = {
             timer    : options.timer     || 0,
             container: options.container || $("body") ,
             onShow   : options.onShow,
-            onHide   : options.onHide
+            onHide   : options.onHide,
+            destroyWhenHide: options.destroyWhenHide,
+            closable : options.closable
         };
 
-        if (options.closable === undefined) {
+        if (this.options.closable === undefined) {
             this.options.closable = true;
         }
 
@@ -93,7 +103,7 @@ var Banner = {
     }
 };
 
-$.banner = function(options) {
+$banner = function(options) {
     var banner = Object.create(Banner);
     banner.init(options, this);
 

@@ -12,7 +12,8 @@ module.exports = {
                 'start'         : 'Start!',
                 'cannotMore5'   : 'You cannot select more than 5 cards!',
                 'ok'            : 'OK',
-                'cannot'        : 'Cannot!'
+                'cannot'        : 'Cannot!',
+                'start_play'    : 'Play!',
             },
 
             'pt': {
@@ -24,6 +25,7 @@ module.exports = {
                 'cannotMore5'   : 'Você não pode selecionar mais de 5 cartas!',
                 'ok'            : 'OK',
                 'cannot'        : 'Impossível!',
+                'start_play'    : 'Jogar!',
             },
 
             'es': {
@@ -35,6 +37,7 @@ module.exports = {
                 'cannotMore5'   : '¡No puede seleccionar más de 5 cartas!',
                 'ok'            : 'OK',
                 'cannot'        : '¡No se puede!',
+                'start_play'    : 'Juegue!',
             }
 
 

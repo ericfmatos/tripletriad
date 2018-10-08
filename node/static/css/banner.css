@@ -7,6 +7,11 @@
     border-bottom-left-radius: 8px;
     font-weight: normal;
     left: 100%;
+
+}
+
+.banner > * {
+    white-space: nowrap;
 }
 
 
@@ -43,4 +48,9 @@
 .banner .fa-close:hover{
     background-color: #eee;
     color: #000;
+}
+
+
+.banner-container {
+    position: relative;
 }

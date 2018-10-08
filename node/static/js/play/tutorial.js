@@ -83,6 +83,10 @@ var TutorialHandler = function() {
             title : elements.texts.find("#tutorialStart").text(),
             desc : elements.texts.find("#startingDesc").text()
         };
+        texts.play = {
+            title: elements.texts.find("#play").text(),
+            desc: elements.texts.find("#userMayStart").text()
+        }
     }
 
 
@@ -103,10 +107,12 @@ var TutorialHandler = function() {
 
         addNewElements();
 
-       banner.initial = $.banner({type: 'success', closable: false, title: texts.starting.title, text: texts.starting.desc, container: $(".banner-container")});
-       banner.initial.show();
+       banners.initial = $banner({type: 'success', closable: false, title: texts.starting.title, text: texts.starting.desc, destroyWhenHide: false, container: $(".banner-container")});
+       banners.initial.show();
 
-       banners.noMoreThan5Alert = $.banner({type: 'danger', timer:5000, closable: true, title: texts.cannot, text: texts.cannotMore5, container: $(".banner-container")});
+       banners.noMoreThan5Alert = $banner({type: 'danger', timer:5000, closable: true, title: texts.cannot, text: texts.cannotMore5,  destroyWhenHide: false, container: $(".banner-container")});
+
+       banners.play = $banner({type: 'success', closable:false, title: texts.play.title, text: texts.play.desc, destroyWhenHide: false, container: $(".banner-container")});
 
 
        //TODO banner play!

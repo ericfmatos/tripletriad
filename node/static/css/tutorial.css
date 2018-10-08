@@ -51,7 +51,7 @@ ul.decks .deck__data {
 }
 
 ul.cards {
-    max-height: 220px;
+    max-height: 230px;
     overflow-y: auto;
     padding-top: 4px;
 }
