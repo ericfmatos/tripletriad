@@ -1,3 +1,46 @@
 .banner{
-    background:#98bf21;height:100px;right:0;position:absolute;
+    background:#98bf21;
+    right:0;
+    position:absolute;
+    overflow:hidden;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    font-weight: normal;
+    left: 100%;
+}
+
+
+.banner__title {
+    padding: 4px 12px;
+    font-weight: bold;
+    letter-spacing: 0.4px;
+}
+
+.banner__text {
+    padding: 2px 12px 24px;
+    display: block;
+}
+
+.banner--success .banner__title {
+    background-color: rgba(40, 167, 69, 0.5);
+    color: white;
+}
+
+.banner--success{
+    background-color: rgba(33, 136, 56, 0.5);
+    color: #333;
+}
+
+
+.banner .fa-close {
+    cursor: pointer;
+    float: right;
+    margin: 4px;
+    padding: 4px;
+    border-radius: 100%
+}
+
+.banner .fa-close:hover{
+    background-color: #eee;
+    color: #000;
 }

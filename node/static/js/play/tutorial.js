@@ -4,6 +4,11 @@ var TutorialHandler = function() {
 
     var toggledCards = [];
 
+    var banners = {
+        initial: {},
+         noMoreThan5Alert : {},
+         play: {}
+    }
 
 
     function loadElements() {
@@ -28,12 +33,7 @@ var TutorialHandler = function() {
                 card.addClass("toggled");
                 toggledCards.push(cardid);
             } else {
-                Alerts({
-                    messageText: texts.cannotMore5,
-                    alertType: "danger",
-                    okButtonText: texts.ok,
-                    headerText: texts.cannot
-                  });
+                banners.noMoreThan5Alert.show();
             }
             
         }
@@ -42,21 +42,19 @@ var TutorialHandler = function() {
 
         if (toggledCards.length >= 5) {
             elements.startGame.removeClass("hidden");
+            banners.initial.hide();
+            banners.play.show();
         }
         else {
             elements.startGame.addClass("hidden");
+            banners.initial.show();
+            banners.play.hide();
         }
         
     }
 
     function onStartGame(el) {
         NotificationHandler.pause();
-        Alerts({
-            messageText: "vamos começar",
-            alertType: "danger",
-            okButtonText: texts.ok,
-            headerText: texts.cannot
-          });
     }
 
     function addListeners() {
@@ -105,8 +103,13 @@ var TutorialHandler = function() {
 
         addNewElements();
 
-       var myBanner = $.banner({type: 'success', timer:10000, title: texts.starting.title, text: texts.starting.desc, container: ".banner-container"})
-       myBanner.show();
+       banner.initial = $.banner({type: 'success', closable: false, title: texts.starting.title, text: texts.starting.desc, container: $(".banner-container")});
+       banner.initial.show();
+
+       banners.noMoreThan5Alert = $.banner({type: 'danger', timer:5000, closable: true, title: texts.cannot, text: texts.cannotMore5, container: $(".banner-container")});
+
+
+       //TODO banner play!
     }
 
 

@@ -6,16 +6,53 @@ var Banner = {
     owner: {},
 
     show: function() {
-        this.el.animate({left: "10%"});
-        var master=this;
-        if (this.options.timer) {
-            setTimeout(function() {master.hide()}, this.options.timer);
+        if (this.el) {
+            var master = this;
+            var content = this.el.find("span");
+            content.css("display", "none");
+            this.el.animate(
+                {left: "10%"}, 
+                { complete: function(){ 
+                    content.css("display", "");
+                    if (master.options.onShow) {
+                        master.options.onShow(master);
+                    }
+                }
+            });
+                
+            if (this.options.timer) {
+                setTimeout(function() {master.hide()}, this.options.timer);
+            }
         }
     },
 
     hide: function() {
-        this.el.animate({'margin-left' : "50%",
-        'opacity' : '0'});
+        if (this.el) {
+            var master = this;
+            this.el.animate(
+                {'left' : "100%"},
+                { complete: function(){ 
+                    if (master.options.onHide) {
+                        master.options.onHide(master);
+                    }
+                    if (master.options.destroyWhenHide || true) {
+                        master.dispose();
+                    }
+                }
+                }
+            );
+        }
+    },
+
+    dispose: function() {
+        if (this.el) {
+            this.el.remove();
+        }
+        this.el = undefined;
+    },
+
+    getElement() {
+        return this.el;
     },
 
     init: function(options, owner) {
@@ -25,14 +62,17 @@ var Banner = {
             title    : options.title     || '',
             text     : options.text      || 'sample',
             timer    : options.timer     || 0,
-            closable : options.closable  || true,
-            container: options.container || "body" 
+            container: options.container || $("body") ,
+            onShow   : options.onShow,
+            onHide   : options.onHide
         };
-        this.el = $(`<div class='banner banner--${this.options.type}'></div>`);
-        if (this.options.title) {
-            this.el.append($(`<p class="banner__title">${this.options.title}</p>`));
+
+        if (options.closable === undefined) {
+            this.options.closable = true;
         }
-        this.el.append(`<span class="banner__text">${this.options.text}</span>`);
+
+        this.el = $(`<div class='banner banner--${this.options.type}'></div>`);
+        
         if (this.options.closable) {
             var iClose = $('<i class="banner__close fa fa-close"></i>');
             this.el.append(iClose);
@@ -41,7 +81,13 @@ var Banner = {
                 master.hide();
             });
         }
-        $(this.options.container).append(this.el);
+
+        if (this.options.title) {
+            this.el.append($(`<p class="banner__title">${this.options.title}</p>`));
+        }
+        this.el.append(`<span class="banner__text">${this.options.text}</span>`);
+        
+        this.options.container.append(this.el);
 
 
     }
@@ -59,6 +105,10 @@ $.banner = function(options) {
 
         hide: function( options ) {
             banner.hide(  );
+        },
+
+        dispose: function() {
+            banner.dispose();
         }
         
     }
