@@ -55,3 +55,31 @@ ul.cards {
     overflow-y: auto;
     padding-top: 4px;
 }
+
+
+.hand-trail {
+    overflow: hidden;
+  }
+  
+  .fa-hand-point-left {
+    position: absolute;
+    left: 0;
+    display: block;
+   
+    x-transition: all 1s ease-in-out;
+    animation: ani 1s infinite;
+  }
+  
+  
+  @keyframes ani {
+    0% {
+      left: 0;
+    }
+    50% {
+      left: 8px;
+    }
+    100% {
+      left: 0;
+    }
+  }
+  

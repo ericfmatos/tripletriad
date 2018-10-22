@@ -17,6 +17,12 @@ var TutorialHandler = function() {
         elements.texts = $("#textSamples");
         elements.startGame = $(".user-may-start");
         elements.startGameButton =  elements.startGame.find("button");
+        elements.handTrail = $(".hand-trail");
+    }
+
+    function showPointer(where) {
+        elements.handTrail.insertAfter(where);
+        elements.handTrail.removeClass("hidden");
     }
 
     function onCardClick(card) {
@@ -114,6 +120,8 @@ var TutorialHandler = function() {
 
        banners.play = $banner({type: 'success', closable:false, title: texts.play.title, text: texts.play.desc, destroyWhenHide: false, container: $(".banner-container")});
 
+
+       showPointer($(".deck__title"));
 
        //TODO banner play!
     }
