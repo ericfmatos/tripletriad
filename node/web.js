@@ -17,16 +17,13 @@ var viewsDir =  path.join(__dirname, 'views');
 
 var session = require('express-session');
 
-
-
 // required for passport session
 app.use(session({
   secret: 'N4qu&14$',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: false, maxAge: 3600000 }
 }));
-
 
 
 const publicPath = path.join(__dirname, '../views');
@@ -59,32 +56,22 @@ function getResData(resName, context ) {
 }
 var hbs_render = hbs.__proto__.render;
 hbs.__proto__.render = function (filePath, context, options) {
-
   var resName =  replaceExt(filePath, 'res');
   getResData(resName, context);
-   
-
   return hbs_render.call(hbs, filePath, context, options);
 }
 
-
 Handlebars.VM.invokePartialOrigin = Handlebars.VM.invokePartial;
 Handlebars.VM.invokePartial = function (partial, name, context, helpers, partials, data, depths) {
-
   var resName = path.join(Handlebars.dirs.partialsDir, name) + ".res";
   getResData(resName, context);
-  
-  
   return Handlebars.VM.invokePartialOrigin.call(Handlebars.VM, partial, name, context, helpers, partials, data, depths);
 };
  
-//app.engine('handlebars', handlebars({partialsDir: path.join(__dirname, 'views/partials')}));
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
- 
 app.use(express.static(path.join(__dirname, 'static')));
-
 
 var httpServer = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
@@ -94,6 +81,7 @@ const _passport = require('./config/passport')(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 // send app to router
-require('./router')(app, passport);
 
+
+require('./router')(app, passport);
 require('./websocket')(app, httpServer );

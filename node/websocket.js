@@ -3,7 +3,13 @@ module.exports = function(app, httpServer){
     var http = require('http');
 
     var port = 58082;
+    var logger = require('./core/logger');
     var webSocketServer = require('websocket').server;
+    var passport = require('passport');
+    var SessionHandler= require('./session-control');
+
+    var TTWebSocket = require('./websockets/tt');
+
 
     /*var httpServer = http.createServer(function(request, response) {
         // Not important for us. We're writing WebSocket server,
@@ -23,21 +29,65 @@ module.exports = function(app, httpServer){
     });
 
 
-    var clients = [];
+
+
+     clients = {};
 
     
-    function originIsAllowed(origin) {
+    function originIsAllowed(origin, userid) {
     // put logic here to detect whether the specified origin is allowed.
-        return true;
+
+        if (clients[userid]) {
+            clients[userid].connection.close();
+        }
+
+        return SessionHandler.findSession(userid);
     }
 
     
 
+    function runMessage(sessionData, jsonMessage) {
+
+        if (jsonMessage.header) {
+
+            if (jsonMessage.header.userid == sessionData.session.user.userid) {
+
+                switch (jsonMessage.header.app) {
+                    case "tt":
+                        return TTWebSocket.messageReceived(sessionData, jsonMessage);
+                    default:
+                        throw new Error(`invalid msg format. unknown app ${jsonMessage.header.app}`);    
+                }
+            } else {
+                throw new Error("invalid msg. userid not the same as session");    
+            }
+        }
+        else {
+            throw new Error("invalid msg format. no header found");
+        }
+    }
+
+    wsServer.sendGameMsg = function(sessionData, app, msg, data) {
+        sessionData.connection.sendUTF(JSON.stringify({
+            header: {
+                app: app,
+                userid: sessionData.session.session.userid,
+                msg: msg
+            },
+            data: data
+        }));
+    }
+
+
     wsServer.on('request', function(request) {
         console.log((new Date()) + ' Connection from origin '
             + request.origin + '.');
-        
-        if (!originIsAllowed(request.origin)) {
+
+        var userid = request.resourceURL.query.userid;
+       
+        var session = originIsAllowed(request.origin, userid);
+
+        if (!session) {
             // Make sure we only accept requests from an allowed origin
             request.reject();
             console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
@@ -45,15 +95,27 @@ module.exports = function(app, httpServer){
         }
         var connection = request.accept(null, request.origin);
 
+        var sessionData = { socket: this, connection, session };
+        session.user.liveStatus = 0;
 
-        var index = clients.push(connection) - 1;
+        clients[userid] = sessionData;
+        //clients.push(connection) - 1;
         console.log((new Date()) + ' Connection accepted.');
         // user sent some message
         
+    
         connection.on('message', function(message) {
             if (message.type === 'utf8') { // accept only text
                 console.log('Received Message: ' + message.utf8Data);
-                connection.sendUTF(message.utf8Data);
+                //connection.sendUTF(message.utf8Data);
+
+                try {
+                    runMessage (sessionData, JSON.parse(message.utf8Data));
+                }
+                catch (e){
+                    logger.error("reading websocket message: " + e.message, {e,message});
+                }
+
             }
         });
         
@@ -62,7 +124,8 @@ module.exports = function(app, httpServer){
             console.log((new Date()) + " Peer "
                 + connection.remoteAddress + " disconnected.");
             // remove user from the list of connected clients
-            clients.splice(index, 1);
+            //clients.splice(index, 1);
+            delete clients[userid];
         });
     });
 }

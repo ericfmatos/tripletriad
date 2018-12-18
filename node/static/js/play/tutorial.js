@@ -4,6 +4,8 @@ var TutorialHandler = function() {
 
     var toggledCards = [];
 
+    var socket;
+
     var banners = {
         initial: {},
          noMoreThan5Alert : {},
@@ -61,6 +63,8 @@ var TutorialHandler = function() {
 
     function onStartGame(el) {
         NotificationHandler.pause();
+        socket = TTSocketPlay();
+        socket.start("tutorial");//?
     }
 
     function addListeners() {

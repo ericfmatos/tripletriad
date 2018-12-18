@@ -3,6 +3,7 @@ var HomeController = require('./controllers/HomeController');
 var NotificationController = require('./controllers/NotificationController');
 var CardsController = require('./controllers/CardsController');
 var PlayController = require('./controllers/PlayController');
+var SessionHandler =require('./session-control');
 
 
 // Routes
@@ -19,11 +20,24 @@ module.exports = function(app, passport){
     // Main Routes
      
     app.get('/', HomeController.Index);
+    
     app.get('/home', isLoggedIn,  HomeController.Home);
+    
     app.get('/profile', isLoggedIn,  HomeController.Profile);
 
     app.get('/logout', function(req, res) {
+        var userid = 0;
+        if (req.session.passport && req.session.passport.user) {
+            userid = req.session.passport.user.userid;
+        }
         req.logout();
+        if (userid) {
+            SessionHandler.delSession(userid);
+        }
+        if (req.session) {
+            req.session.destroy();
+        }
+        
         res.redirect('/');
     });
 
@@ -60,8 +74,6 @@ module.exports = function(app, passport){
     // email gets their emails
     app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
     
-    
-
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
             passport.authenticate('google', {

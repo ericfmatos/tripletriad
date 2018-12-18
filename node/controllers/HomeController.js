@@ -3,6 +3,7 @@ var languageController = require('../core/language');
 var gameConfig = require('../config/game');
 var logger = require('../core/logger')
 var notificationHandler = require('../core/notification');
+var sessionHandler = require('../session-control');
 
 exports.Index = function(request, response){
 
@@ -35,7 +36,8 @@ exports.Profile = function(request, response) {
 
 exports.Home = function(request, response){
     var user = request.session.passport.user;
-    
+    sessionHandler.newSession({user, session:request.session});
+
 
     if (user.userid) {
         controllerFunc.renderPage(
