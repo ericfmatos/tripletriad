@@ -27,7 +27,7 @@ var TTSocket = function(){
 
     function onMessageReceived(message) {
         if (options.onMessageReceived) {
-            options.onMessageReceived(message.data);
+            options.onMessageReceived(JSON.parse(message.data));
         }
     }
 
@@ -78,6 +78,8 @@ var TTSocketPlay = function() {
 
     var mainSocket;
 
+    var options;
+
     function sendMessage(msg, data) {
         mainSocket.sendMessage(JSON.stringify({
             header: {
@@ -89,7 +91,31 @@ var TTSocketPlay = function() {
         }));
     }
 
-    var start = function(game) {
+    function cardsRequest() {
+       sendMessage("cardsRes", $.map($(".card.toggled"), function(e){return e.dataset.id}));
+    }
+
+    function checkMsg(msg) {
+        switch(msg.header.msg) {
+            case "cardsReq":
+                cardsRequest();
+                break;
+
+            case "error":
+                console.log(msg.data);
+                break;
+                
+            case "startMatch":
+                if (options && options.startMatch) {
+                    options.startMatch();
+                }
+                break;
+
+        }
+    }
+
+    var start = function(game, _options) {
+        options = _options;
 
         mainSocket = TTSocket();
         mainSocket.start({
@@ -103,7 +129,7 @@ var TTSocketPlay = function() {
                 console.log("conn error");
             },
             onMessageReceived: function(msg) {
-                
+                checkMsg(msg);
             }
         }, userid);
 

@@ -153,6 +153,18 @@ module.exports = {
 
     },
 
+    listUsersCardsById: function (userId, cardsIds, err, done) {
+        var query = `select * from ${pgClient.schema}.user_cards where userid = ${userId} and cardid in (${cardsIds.join(",")})`;
+        
+        var conn = pgClient.execQuery(
+            query,
+            _err => err(_err),
+            _data => {
+               return done (_data.rows);
+            }
+        );
+    },
+
     listUserCards: function(userid, err, done) {
 
         var query = `select a.*, row_to_json(b) as card from ${pgClient.schema}.user_cards a inner join

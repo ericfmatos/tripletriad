@@ -1,5 +1,4 @@
 module.exports = function(app, httpServer){
-
     var http = require('http');
 
     var port = 58082;
@@ -54,7 +53,13 @@ module.exports = function(app, httpServer){
 
                 switch (jsonMessage.header.app) {
                     case "tt":
-                        return TTWebSocket.messageReceived(sessionData, jsonMessage);
+                        if (sessionData.protocol && sessionData.protocol != "tt") {
+                            throw new Error(`cannot switch protocol from ${sessionData.protocol} to tt`);        
+                        }
+                        else {
+                            sessionData.protocol = "tt";
+                            return TTWebSocket.messageReceived(sessionData, jsonMessage);
+                        }
                     default:
                         throw new Error(`invalid msg format. unknown app ${jsonMessage.header.app}`);    
                 }
@@ -96,13 +101,11 @@ module.exports = function(app, httpServer){
         var connection = request.accept(null, request.origin);
 
         var sessionData = { socket: this, connection, session };
-        session.user.liveStatus = 0;
 
         clients[userid] = sessionData;
         //clients.push(connection) - 1;
         console.log((new Date()) + ' Connection accepted.');
         // user sent some message
-        
     
         connection.on('message', function(message) {
             if (message.type === 'utf8') { // accept only text
@@ -125,6 +128,17 @@ module.exports = function(app, httpServer){
                 + connection.remoteAddress + " disconnected.");
             // remove user from the list of connected clients
             //clients.splice(index, 1);
+
+            var userClosed = clients[userid];
+
+            if (userClosed) {
+                switch (userClosed.protocol) {
+                    case "tt":
+                        TTWebSocket.closeAbrupt(userClosed);
+                        break;
+                }
+            }
+
             delete clients[userid];
         });
     });

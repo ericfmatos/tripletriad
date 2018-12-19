@@ -63,7 +63,9 @@ module.exports = function(app, passport){
     app.post(routerFolder +'setRead', isLoggedIn, NotificationController.NotificationRead);
 
 
+    
     routerFolder = '/play/';
+    app.get(routerFolder +'board', isLoggedIn, PlayController.Board);
     app.get(routerFolder +'tutorial', isLoggedIn, PlayController.Tutorial);
 
    // =====================================

@@ -61,10 +61,19 @@ var TutorialHandler = function() {
         
     }
 
+    function startMatch() {
+        console.log("chegou onde tinha que chegar");
+        $('.modal-body').load('/play/board',function(){
+            $('#tutorialModal').modal({show:true, backdrop: 'static', keyboard:false});
+        });
+    }
+
     function onStartGame(el) {
         NotificationHandler.pause();
         socket = TTSocketPlay();
-        socket.start("tutorial");//?
+        socket.start("tutorial", {
+            startMatch: startMatch
+        });//?
     }
 
     function addListeners() {
