@@ -51,4 +51,10 @@ module.exports = class TTNPC extends TTPlayer{
     
         ]);
     }
+
+    matchFinished() {
+        this._data.match = null;
+        this._data.player = null;
+    }
+
 }

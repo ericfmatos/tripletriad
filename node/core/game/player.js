@@ -82,4 +82,10 @@ module.exports = class TTPlayer {
         this.sendMessage("startMatch", "");
     }
 
+    matchFinished() {
+        this._data.match = null;
+        this._data.player = null;
+        this.sendMessage("matchFinished", "");
+    }
+
 }

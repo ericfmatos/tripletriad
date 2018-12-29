@@ -2,6 +2,16 @@
 
 const MAX_PLAYERS = 2;
 
+const MatchStatus = {
+    WAITING_PLAYERS: 1,
+    STARTING: 2,
+    GAME_ON: 3,
+    RESULTS: 4,
+    FINISHED: 5
+};
+
+const TIMEOUT = 60000;
+
 module.exports = class TTMatch {
 
         
@@ -12,6 +22,7 @@ module.exports = class TTMatch {
             this._playersToGo = MAX_PLAYERS;
             this._turn = NaN;
             this._playersIds = [];
+            this._status = MatchStatus.WAITING_PLAYERS;
         }
 
         get type() {
@@ -57,15 +68,37 @@ module.exports = class TTMatch {
 
         startMatch() {
             this._turn = 0;
-            //TODO send msg to all players
+            this._status = MatchStatus.STARTING;
 
             for (var i = 0; i < this._playersIds.length; i++) {
-                this._players[this._playersIds[i]].startMatch();
+                var player = this._players[this._playersIds[i]];
+                player.timeout = setTimeout(function(x){ whenTimedOut(i); }, TIMEOUT);
+                player.startMatch();
+            } 
+
+                
+        }
+
+        playerReady(who) {
+            
+        }
+
+        finish() {
+            this._status = MatchStatus.FINISHED;
+            for (var i = 0; i < this._playersIds.length; i++) {
+                this._players[this._playersIds[i]].matchFinished();
             }
         }
 
         closeAbrupt() {
             //TODO
+        }
+
+        whenTimedOut(who) {
+            for (var i = 0; i < this._playersIds.length; i++) {
+                this._players[this._playersIds[i]].timeout(who == i);
+            }
+            finish();
         }
 
 }
