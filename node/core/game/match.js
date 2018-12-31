@@ -166,22 +166,64 @@ module.exports = class TTMatch {
             return this.PlayCardResult.POS_TAKEN; 
         }
 
-        this._board[x][y] = {player, card, x, y};
+        this._board[y][x] = {player, card, x, y};
         player.removeCardFromHand(card);
 
         cardPlayed(x, y);
-        //TODO check for flipping
+        
+        var cellToCheck = null;
+
+        //NMBERS: top, left, right, bottom.
+        //TODO ELEMENTARS
+        if (x > 0 && this._board[y][x-1]) {
+            cellToCheck = this._board[y][x-1];
+
+            if (cellToCheck.card.numbers[2] < card.numbers[1]) {
+                flipCard(cellToCheck, player);
+            }
+        }
+
+        if (x < 2 && this._board[y][x+1]) {
+            cellToCheck = this._board[y][x+1];
+
+            if (cellToCheck.card.numbers[1] < card.numbers[2]) {
+                flipCard(cellToCheck, player);
+            }
+        }
+
+        if (y > 0 && this._board[y-1][x]) {
+            cellToCheck = this._board[y-1][x];
+
+            if (cellToCheck.card.numbers[3] < card.numbers[0]) {
+                flipCard(cellToCheck, player);
+            }
+        }
+
+        if (y < 2 && this._board[y+1][x]) {
+            cellToCheck = this._board[y+1][x];
+
+            if (cellToCheck.card.numbers[0] < card.numbers[3]) {
+                flipCard(cellToCheck, player);
+            }
+        }
 
     }
 
     cardPlayed(x, y) {
-        var cell = this._board[x][y];//{player, card}
+        var cell = this._board[y][x];//{player, card}
         for (var i = 0; i < this._playersIds.length; i++) {
             this._players[this._playersIds[i]].cardPlayed(x, y, cell.player.id, cell.card); 
         }
 
         //TODO check for end of game
         this.changeTurn();
+    }
+
+    flipCard(cell, newPlayer) {
+        var oldPlayer = cell.player;
+        oldPlayer.lostCard(cell.card, x, y);
+        cell.player = newPlayer;
+        newPlayer.gainCard(cell.card, x, y);
     }
 }
 

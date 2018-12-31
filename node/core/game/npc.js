@@ -71,4 +71,12 @@ module.exports = class TTNPC extends TTPlayer{
     }
 
 
+    lostCard(card, x, y) {
+        //TODO update my own internal board
+    }
+
+    gainCard(card, x, y) {
+        //TODO update my own internal board
+    }
+
 }

@@ -176,4 +176,13 @@ module.exports = class TTPlayer {
         }
     }
 
+
+    lostCard(card, x, y) {
+        this.sendMessage("lostCard", {x, y, card});
+    }
+
+    gainCard(card, x, y) {
+        this.sendMessage("gainCard", {x, y, card});
+    }
+
 }
