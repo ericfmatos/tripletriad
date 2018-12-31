@@ -12,7 +12,7 @@ module.exports = class TTNPC extends TTPlayer{
     }
 
     startMatch() {
-        //TODO
+        this._match.playerStarted(this._id);
     }
 
     reqCards() {
@@ -56,5 +56,19 @@ module.exports = class TTNPC extends TTPlayer{
         this._data.match = null;
         this._data.player = null;
     }
+
+
+    otherTurn(who) {
+        //do nothing
+    }
+
+    yourTurn() {
+        //TODO play
+    }
+
+    cardPlayed(x, y, playerId, card ) {
+        //TODO update my own internal board
+    }
+
 
 }

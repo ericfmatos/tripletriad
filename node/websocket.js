@@ -36,10 +36,6 @@ module.exports = function(app, httpServer){
     function originIsAllowed(origin, userid) {
     // put logic here to detect whether the specified origin is allowed.
 
-        if (clients[userid]) {
-            clients[userid].connection.close();
-        }
-
         return SessionHandler.findSession(userid);
     }
 
@@ -98,11 +94,17 @@ module.exports = function(app, httpServer){
             console.log((new Date()) + ' Connection from origin ' + request.origin + ' rejected.');
             return;
         }
-        var connection = request.accept(null, request.origin);
 
+        if (session.connection) {
+            session.connection.close();
+            session.connection = null;
+        }
+
+        var connection = request.accept(null, request.origin);
+        session.connection = connection;
+        
         var sessionData = { socket: this, connection, session };
 
-        clients[userid] = sessionData;
         //clients.push(connection) - 1;
         console.log((new Date()) + ' Connection accepted.');
         // user sent some message
@@ -120,8 +122,11 @@ module.exports = function(app, httpServer){
                 }
 
             }
+            
         });
         
+
+
         // user disconnected
         connection.on('close', function(connection) {
             console.log((new Date()) + " Peer "
@@ -129,17 +134,18 @@ module.exports = function(app, httpServer){
             // remove user from the list of connected clients
             //clients.splice(index, 1);
 
-            var userClosed = clients[userid];
 
-            if (userClosed) {
-                switch (userClosed.protocol) {
+            
+            if (sessionData) {
+                switch (sessionData.protocol) {
                     case "tt":
-                        TTWebSocket.closeAbrupt(userClosed);
+                        TTWebSocket.closeAbrupt(sessionData);
                         break;
                 }
+
+                sessionData.session.connection = null;
             }
 
-            delete clients[userid];
         });
     });
 }

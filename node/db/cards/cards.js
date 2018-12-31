@@ -152,9 +152,38 @@ module.exports = {
         );
 
     },
-
+/*
+OUTPUT:
+userid: 63,
+cardid:	2,
+numbers:	[1,2,1,3],
+data:	{},
+card:{
+    cardid:2,
+    deckid:1,
+    level:1,
+    name:"Bite Bug",
+    elementar:[],
+    data:null,
+    img:"TTBiteBug",
+    rarity:0,
+    deck:{
+        deckid:1,
+        name:"Final Fantasy VIII",
+        data:null,
+        folder:"ffviii",
+        style:"ffviii"
+    }
+}
+*/
     listUsersCardsById: function (userId, cardsIds, err, done) {
-        var query = `select * from ${pgClient.schema}.user_cards where userid = ${userId} and cardid in (${cardsIds.join(",")})`;
+        //var query = `select * from ${pgClient.schema}.user_cards where userid = ${userId} and cardid in (${cardsIds.join(",")})`;
+        var query = `select a.*, row_to_json(b) as card from ${pgClient.schema}.user_cards a inner join
+                        (select card.*, row_to_json(deck) as deck from ${pgClient.schema}.cards card 
+                        inner join ${pgClient.schema}.decks deck on card.deckid = deck.deckid) b
+                        on a.cardid = b.cardid
+                        WHERE a.userid = ${userid}
+                        AND a.cardid in (${cardsIds.join(",")});`;
         
         var conn = pgClient.execQuery(
             query,
@@ -171,6 +200,7 @@ module.exports = {
                             (select card.*, row_to_json(deck) as deck from ${pgClient.schema}.cards card 
                             inner join ${pgClient.schema}.decks deck on card.deckid = deck.deckid) b
                             on a.cardid = b.cardid
+                            WHERE a.userid = ${userid}
                     order by a.cardid;`;
 
         var conn = pgClient.execQuery(
