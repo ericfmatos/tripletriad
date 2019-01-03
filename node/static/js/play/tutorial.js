@@ -20,6 +20,7 @@ var TutorialHandler = function() {
         elements.startGame = $(".user-may-start");
         elements.startGameButton =  elements.startGame.find("button");
         elements.handTrail = $(".hand-trail");
+        elements.modalBoard = $('#tutorialModal');
     }
 
     function showPointer(where) {
@@ -61,12 +62,21 @@ var TutorialHandler = function() {
         
     }
 
-    function startMatch() {
+    function startMatch(cards) {
         console.log("chegou onde tinha que chegar");
         $('.modal-body').load('/play/board',function(){
-            $('#tutorialModal').modal({show:true, backdrop: 'static', keyboard:false});
+            elements.modalBoard.on('shown.bs.modal', function(){
+                socket.playerIsReady();
+            });
+
+            
+            elements.modalBoard.modal({show:true, backdrop: 'static', keyboard:false});
+            //posicionar as cartas
+
         });
     }
+
+    
 
     function onStartGame(el) {
         NotificationHandler.pause();

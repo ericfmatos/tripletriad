@@ -76,6 +76,12 @@ var TTSocketPlay = function() {
 
     var userid = $("#userId").data("id");
 
+    var matchData = {
+        myScore : 5,
+        otherScore : 5,
+        cards: []
+    };
+
     var mainSocket;
 
     var options;
@@ -92,7 +98,77 @@ var TTSocketPlay = function() {
     }
 
     function cardsRequest() {
-       sendMessage("cardsRes", $.map($(".card.toggled"), function(e){return e.dataset.id}));
+        var cards =  $(".card.toggled");
+        sendMessage("cardsRes", $.map(cards, function(e){return e.dataset.id}));
+        matchData.cards = cards;
+    }
+
+    function matchFinished() {
+        disableMoveMyCards();
+        //TODO
+    }
+
+    function disableMoveMyCards() {
+        //TODO
+    }
+
+    function otherTurn() {
+        //show message
+        disableMoveMyCards();
+    }
+
+    function enableMoveMyCards() {
+
+    }
+
+    function myTurn() {
+        //show message
+        enableMoveMyCards();
+    }
+
+    function flipCard(x, y, toMe) {
+        //TODO
+    }
+
+    function updateScore() {
+        //TODO
+    }
+
+    function lostACard(x, y) {
+        flipCard(x, y, false);
+        matchData.otherScore++;
+        matchData.myScore--;
+        updateScore();
+    }
+
+    function gainedACard(x, y) {
+        flipCard(x, y, true);
+        matchData.otherScore--;
+        matchData.myScore++;
+        updateScore();
+    }
+    
+    function displayVictory() {
+        disableMoveMyCards();
+        //TODO
+    }
+
+    function displayDefeat() {
+        disableMoveMyCards();
+        //TODO
+    }
+
+    function displayTie() {
+        disableMoveMyCards();
+        //TODO
+    }
+
+    function playACard(card, x, y) {
+        sendMessage("playCard", {card, x, y});
+    }
+
+    function playerIsReady() {
+        sendMessage("ready", {});
     }
 
     function checkMsg(msg) {
@@ -107,10 +183,56 @@ var TTSocketPlay = function() {
                 
             case "startMatch":
                 if (options && options.startMatch) {
-                    options.startMatch();
+                    options.startMatch(matchData.cards);
+                    //TODO arrumar isso aqui:
+                    
                 }
+                
                 break;
 
+            case "score":
+                console.log("score: " + msg.data);
+                break;
+
+            case "playCardRes":
+                console.log("cards played ok");
+                break;
+
+            case "matchFinished":
+                matchFinished();
+                break;
+
+            case "otherTurn":
+                otherTurn();
+                break;
+
+            case "yourTurn":
+                myTurn();
+                break;
+
+            case "lostCard":
+                lostACard(x, y);
+                break;
+
+            case "gainedCard":
+                gainedACard(x,y);
+                break;
+
+            case "flipCard":
+                //do nothing
+                break;
+
+            case "victory":
+                displayVictory();
+                break;
+
+            case "lost":
+                displayDefeat();
+                break;
+
+            case "tie":
+                displayTie();
+                break;
         }
     }
 
@@ -123,7 +245,7 @@ var TTSocketPlay = function() {
                 sendMessage("start", "tutorial");
             },
             onConnectionClose:function() {
-
+                matchFinished();
             },
             onConnectionError: function() {
                 console.log("conn error");
@@ -137,6 +259,8 @@ var TTSocketPlay = function() {
 
     }
     return {
-        start
+        start,
+        playACard,
+        playerIsReady
     }
 }

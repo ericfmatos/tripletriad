@@ -34,6 +34,17 @@ ul.decks .deck__data {
     border-bottom-right-radius: 20px;
 }
 
+.modal-nosize {
+    width: 1024px;
+    height: auto;
+    min-width: 0 !important;
+    margin: 20px auto;
+}
+
+.modal-nosize .modal-body {
+    padding: 0;
+    
+}
 
 .card.toggled {
     outline: 2px solid blue;
@@ -83,3 +94,4 @@ ul.cards {
     }
   }
   
+

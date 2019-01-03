@@ -33,7 +33,7 @@ var handlebarsData = {
   defaultLayout: 'main',
   layoutsDir   :  path.join(viewsDir, 'layouts'),
   partialsDir  :  partialsDir,
-  helpers      :  require('./views/helpers/handlebars')
+  helpers      :  require('./views/helpers/handlebars').helpers
 }
 
 hbs = handlebars.create(handlebarsData);

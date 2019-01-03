@@ -182,7 +182,7 @@ card:{
                         (select card.*, row_to_json(deck) as deck from ${pgClient.schema}.cards card 
                         inner join ${pgClient.schema}.decks deck on card.deckid = deck.deckid) b
                         on a.cardid = b.cardid
-                        WHERE a.userid = ${userid}
+                        WHERE a.userid = ${userId}
                         AND a.cardid in (${cardsIds.join(",")});`;
         
         var conn = pgClient.execQuery(

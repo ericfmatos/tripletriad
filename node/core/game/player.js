@@ -11,12 +11,16 @@ var USER_STATUS = {
     READY: 3
 };
 
+const   PlayCardResult =  {
+    OK: 0,
+    MATCH_NOT_STARTED: 1,
+    UNKNOWN_PLAYER : 2,
+    INVALID_POS: 3,
+    POS_TAKEN: 4
+}
 
 
-
-module.exports = class TTPlayer {
-
-
+class TTPlayer {
 
     constructor (id, match, userData, sendMsgFunc) {
         this._id = id;
@@ -127,24 +131,24 @@ module.exports = class TTPlayer {
         if (this._match) {
         
             if (checkCardInHand(play.card)) {
-                switch( this._match.playCard(this, play.card, play.X, play.Y) ) {
-                    case this._match.PlayCardResult.OK:
+                switch( this._match.playCard(this, play.card, play.x, play.y) ) {
+                    case PlayCardResult.OK:
                         this.sendMessage("playCardRes", "ok");
                         break;
 
-                    case this._match.PlayCardResult.MATCH_NOT_STARTED:
+                    case PlayCardResult.MATCH_NOT_STARTED:
                         this.sendMessage("error", {src: "playCard", code: 3, msg:"this match has not started yet."});    
                         break;
 
-                    case this._match.PlayCardResult.UNKNOWN_PLAYER:
+                    case PlayCardResult.UNKNOWN_PLAYER:
                         this.sendMessage("error", {src: "playCard", code: 4, msg:"this player is not in a match."});    
                         break;
 
-                    case this._match.PlayCardResult.INVALID_POS:
+                    case PlayCardResult.INVALID_POS:
                         this.sendMessage("error", {src: "playCard", code: 5, msg:"this position is not valid."});    
                         break;
                     
-                    case this._match.PlayCardResult.POS_TAKEN:
+                    case PlayCardResult.POS_TAKEN:
                         this.sendMessage("error", {src: "playCard", code: 6, msg:"this position is already taken."});    
                         break;
                 }
@@ -163,8 +167,8 @@ module.exports = class TTPlayer {
     }
 
     matchFinished() {
-        this._data.match = null;
-        this._data.player = null;
+        this._match = null;
+        this._player = null;
         this.sendMessage("matchFinished", "");
 
         this._data.session.user.match = null;
@@ -174,8 +178,8 @@ module.exports = class TTPlayer {
     }
 
     playerIsReady() {
-        if (this._data.match) {
-            this._data.match.playerStarted(this._id);
+        if (this._match) {
+            this._match.playerStarted(this._id);
         }
     }
 
@@ -223,11 +227,17 @@ module.exports = class TTPlayer {
    }
 
    lost(winnerId) {
-        this.sendMessage("victory", winnerId);
+        this.sendMessage("lost", winnerId);
    }
 
    tie(players, myCards) {
-        this.sendMessage("victory", {players, myCards});
+        this.sendMessage("tie", {players, myCards});
+   }
+
+   timeoutOccured() {
+    this.sendMessage("error", {src: "none", code: 1, msg: "timeout"});
    }
 
 }
+
+module.exports = {TTPlayer:TTPlayer};

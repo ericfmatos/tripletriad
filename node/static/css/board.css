@@ -1,0 +1,5 @@
+.match-board__board {
+    height: 576px;
+    width: 1024px;
+    background: url('../img/board.jpg');
+}

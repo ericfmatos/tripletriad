@@ -1,8 +1,10 @@
-const TTMatch = require('../core/game/match');
-const TTPlayer = require('../core/game/player');
-const TTNPC = require('../core/game/npc');
+"use strict";
 
-var  sendMsg = function(userData, msg, data) {
+var TTPlayer = require('../core/game/player').TTPlayer;
+var TTNPC = require('../core/game/npc').TTNPC;
+var TTMatch = require('../core/game/match').TTMatch;
+
+var sendMsg = function(userData, msg, data) {
     userData.socket.sendGameMsg(userData, "tt", msg, data );
 }
 

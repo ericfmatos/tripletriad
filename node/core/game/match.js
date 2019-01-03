@@ -1,5 +1,5 @@
 "use strict";
-
+var fs = require('fs');
 const MAX_PLAYERS = 2;
 
 const MatchStatus = {
@@ -14,7 +14,15 @@ const TIMEOUT = 60000;
 const MAX_CARDS_IN_GAME = 9;
 const CARDS_PER_PLAYER = 5;
 
-module.exports = class TTMatch {
+const   PlayCardResult =  {
+    OK: 0,
+    MATCH_NOT_STARTED: 1,
+    UNKNOWN_PLAYER : 2,
+    INVALID_POS: 3,
+    POS_TAKEN: 4
+}
+
+class TTMatch {
 
     constructor(type) {
         this._players = {};
@@ -75,17 +83,25 @@ module.exports = class TTMatch {
         this.sendTurnToPlayers();
     }
 
+    setTimeout(i) {
+        var me = this;
+        return setTimeout(function(x){ me.whenTimedOut(i); }, TIMEOUT);
+    }
+
     startMatch() {
         this._turn = 0;
         this._turnPlayerId = null;
         this._status = MatchStatus.STARTING;
-        this._startCountdown = this._players.length;
+     
+        this._startCountdown = this._playersIds.length;
 
         for (var i = 0; i < this._playersIds.length; i++) {
             var player = this._players[this._playersIds[i]];
-            player.timeout = setTimeout(function(x){ whenTimedOut(i); }, TIMEOUT);
+            player.timeout = this.setTimeout(i);
             player.startMatch();
         } 
+
+        
 
             
     }
@@ -111,7 +127,7 @@ module.exports = class TTMatch {
 
             if (this._turn == i) {
                 this._turnPlayerId = player.playerId;
-                player.timeout = setTimeout(function(x){ whenTimedOut(i); }, TIMEOUT);
+                player.timeout = player.timeout = this.setTimeout(i);
                 player.yourTurn();
             }
             else {
@@ -151,7 +167,7 @@ module.exports = class TTMatch {
         var playerWhoLeft = null;
         for (var i = 0; i < this._playersIds.length; i++) {
             var player=  this._players[this._playersIds[i]];
-            player.timeout(who == i);
+            player.timeoutOccured(who == i); //naõ tá funcionando
             if (who == i) {
                 playerWhoLeft = player;
             }
@@ -164,6 +180,10 @@ module.exports = class TTMatch {
 
     playerLeft(player) {
         if (this._status == MatchStatus.GAME_ON) {
+            if (player.timeout) {
+                clearTimeout(player.timeout);
+                player.timeout = null;
+            }
             player.abandoned();
             this.finish();
         } else {
@@ -182,31 +202,25 @@ module.exports = class TTMatch {
     }
 
 
-    PlayCardResult =  {
-        OK: 0,
-        MATCH_NOT_STARTED: 1,
-        UNKNOWN_PLAYER : 2,
-        INVALID_POS: 3,
-        POS_TAKEN: 4
-    }
+  
 
 
     playCard(player, card, x, y) {
         if (this._status != MatchStatus.GAME_ON) {
-            return this.PlayCardResult.MATCH_NOT_STARTED; 
+            return PlayCardResult.MATCH_NOT_STARTED;
         }
 
         if (!this._players[player.id]) {
-            return this.PlayCardResult.UNKNOWN_PLAYER; 
+            return PlayCardResult.UNKNOWN_PLAYER; 
         }
 
         if (x < 0 || x > 2 || y < 0 || y > 2) {
-            return this.PlayCardResult.INVALID_POS; 
+            return PlayCardResult.INVALID_POS; 
         }
 
         var position = this._board[x][y];
         if (position) {
-            return this.PlayCardResult.POS_TAKEN; 
+            return PlayCardResult.POS_TAKEN; 
         }
 
         this._board[y][x] = {player, card, x, y};
@@ -369,5 +383,5 @@ module.exports = class TTMatch {
 
 }
 
-
+module.exports = {TTMatch:TTMatch};
 
