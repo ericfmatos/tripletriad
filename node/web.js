@@ -32,7 +32,8 @@ var partialsDir = path.join( viewsDir, 'partials');
 var handlebarsData = {
   defaultLayout: 'main',
   layoutsDir   :  path.join(viewsDir, 'layouts'),
-  partialsDir  :  partialsDir
+  partialsDir  :  partialsDir,
+  helpers      :  require('./views/helpers/handlebars')
 }
 
 hbs = handlebars.create(handlebarsData);

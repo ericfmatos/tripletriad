@@ -19,7 +19,6 @@ function startTutorial(data) {
 
     var player2 = new TTNPC(-1, match, data, sendMsg);
     match.addPlayer(-1, player2);
-    //TODO Tutorial class.
 }
 
 
@@ -61,7 +60,7 @@ module.exports = {
 
     closeAbrupt(data) {
         if (data.session.user.match && data.session.user.match instanceof TTMatch){
-            data.session.user.match.closeAbrupt();
+            data.session.user.match.closeAbrupt(data.session.user.userid);
             data.session.user.match = null;
         }
         if(data.session.user.player) {

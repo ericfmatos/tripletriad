@@ -12,7 +12,7 @@ var USER_STATUS = {
 };
 
 
-const CARDS_NUM = 5;
+
 
 module.exports = class TTPlayer {
 
@@ -25,6 +25,9 @@ module.exports = class TTPlayer {
         this._sendMsg = sendMsgFunc;
         this._cards = [];
         this._status = USER_STATUS.IDLE;
+        this._score = 0;
+        this._timeout = null;
+        this._cardsToSet = 0;
     }
 
 
@@ -40,17 +43,35 @@ module.exports = class TTPlayer {
         return this._id;
     }
 
+    get score() {
+        return this._score;
+    }
 
-    reqCards() {
-        if (this._cards.length < CARDS_NUM) {
-            this.sendMessage("cardsReq", this._match.type);
+    set score(val)  {
+        this._score = val;
+        this.sendMessage("score", this._score);
+    }
+
+    get timeout() {
+        return this._timeout;
+    }
+
+    set timeout(val) {
+        this._timeout = val;
+    }
+
+
+    reqCards(count) {
+        if (this._cards.length < count) {
+            this.sendMessage("cardsReq", { type: this._match.type, count});
+            this._cardsToSet = count;
             this._status = USER_STATUS.CARD_SELECT;
         }
     }
 
     setCards(cards) {
         
-        if (cards.length < CARDS_NUM) {
+        if (cards.length < this._cardsToSet) {
             this._cards = [];
             this.reqCards();    
         }
@@ -61,7 +82,7 @@ module.exports = class TTPlayer {
                     this.sendMessage("error", {src: "cardsReq", code: 1, msg: _err});
                 },
                 _data => {
-                    if (_data.length < CARDS_NUM) {
+                    if (_data.length < this._cardsToSet) {
                         this._cards = [];
                         this.sendMessage("error", {src: "cardsReq", code: 2, msg:"these are not your cards!"});
                         this.reqCards();
@@ -146,6 +167,9 @@ module.exports = class TTPlayer {
         this._data.player = null;
         this.sendMessage("matchFinished", "");
 
+        this._data.session.user.match = null;
+        this._data.session.user.player = null;
+
         this._data.connection.close();
     }
 
@@ -177,12 +201,33 @@ module.exports = class TTPlayer {
     }
 
 
-    lostCard(card, x, y) {
-        this.sendMessage("lostCard", {x, y, card});
-    }
+   flipCard(x, y, from, to) {
+        if (from == this._id) {
+            this.sendMessage("lostCard", {x, y, to});
+        } else if (to == this._id) {
+            this.sendMessage("gainedCard", {x, y, from});
+        } else {
+            this.sendMessage("flipCard", {x, y, from, to});
+        }
 
-    gainCard(card, x, y) {
-        this.sendMessage("gainCard", {x, y, card});
-    }
+   }
+
+   abandoned() {
+        this._data.session.user.match = null;
+        this._data.session.user.player = null;
+       //TODO
+   }
+
+   victory(myCards) {
+        this.sendMessage("victory", myCards);
+   }
+
+   lost(winnerId) {
+        this.sendMessage("victory", winnerId);
+   }
+
+   tie(players, myCards) {
+        this.sendMessage("victory", {players, myCards});
+   }
 
 }

@@ -11,11 +11,10 @@ const MatchStatus = {
 };
 
 const TIMEOUT = 60000;
-
+const MAX_CARDS_IN_GAME = 9;
+const CARDS_PER_PLAYER = 5;
 
 module.exports = class TTMatch {
-
-     
 
     constructor(type) {
         this._players = {};
@@ -28,7 +27,7 @@ module.exports = class TTMatch {
             [null, null, null],
             [null, null, null],
             [null, null, null],
-        ];
+        ]; // {player, card, x, y}
     }
 
     get type() {
@@ -45,14 +44,17 @@ module.exports = class TTMatch {
         else {
             this._players[id] = player;
             this._playersIds.push(id);
-            player.reqCards();
+            player.reqCards(CARDS_PER_PLAYER);
         }
     }
 
     playerReady(id) {
         if (this._players[id]) {
+            this._players[id].score = CARDS_PER_PLAYER;
             this._playersToGo--;
         }
+
+        
 
         if (this._playersToGo == 0) {
             this.startMatch();
@@ -70,7 +72,7 @@ module.exports = class TTMatch {
         else {
             this._turn++;
         }
-        sendTurnToPlayers();
+        this.sendTurnToPlayers();
     }
 
     startMatch() {
@@ -93,8 +95,10 @@ module.exports = class TTMatch {
             var player = this._players[whoId];
             if (player.timeout) {
                 clearTimeout(player.timeout);
+                player.timeout = null;
             }
             this._startCountdown--;
+            player.score = CARDS_PER_PLAYER;
         }
         if (this._startCountdown == 0) {
             this.allPlayersReady_StartMatch();
@@ -104,9 +108,10 @@ module.exports = class TTMatch {
     sendTurnToPlayers() {
         for (var i = 0; i < this._playersIds.length; i++) {
             var player = this._players[this._playersIds[i]];
-            player.timeout = setTimeout(function(x){ whenTimedOut(i); }, TIMEOUT);
+
             if (this._turn == i) {
                 this._turnPlayerId = player.playerId;
+                player.timeout = setTimeout(function(x){ whenTimedOut(i); }, TIMEOUT);
                 player.yourTurn();
             }
             else {
@@ -117,25 +122,63 @@ module.exports = class TTMatch {
 
     allPlayersReady_StartMatch(){
         this._status = MatchStatus.GAME_ON;
+        this._cardsInGame = 0;
         this.sendTurnToPlayers();
     }
 
     finish() {
         this._status = MatchStatus.FINISHED;
         for (var i = 0; i < this._playersIds.length; i++) {
-            this._players[this._playersIds[i]].matchFinished();
+            var player = this._players[this._playersIds[i]];
+            if (player.timeout) {
+                clearTimeout(player.timeout);
+                player.timeout = null;
+            }
+            player.matchFinished();
+            
         }
     }
 
-    closeAbrupt() {
-        this.finish();
+    closeAbrupt(playerId) {
+        if (this._players[playerId]) {
+            var who = this._players[playerId];
+            delete this._players[playerId];
+            this.playerLeft(who);
+        }
     }
 
     whenTimedOut(who) {
+        var playerWhoLeft = null;
         for (var i = 0; i < this._playersIds.length; i++) {
-            this._players[this._playersIds[i]].timeout(who == i);
+            var player=  this._players[this._playersIds[i]];
+            player.timeout(who == i);
+            if (who == i) {
+                playerWhoLeft = player;
+            }
         }
-        finish();
+        if (playerWhoLeft) {
+            this.playerLeft(playerWhoLeft);
+        }
+
+    }
+
+    playerLeft(player) {
+        if (this._status == MatchStatus.GAME_ON) {
+            player.abandoned();
+            this.finish();
+        } else {
+            delete this._players[player.id];
+            this._playersIds = this._playersIds.filter(function(val, index) {
+                return val != player.id;
+            });
+
+            if (this._players.count == 0) {
+                this.finish();
+            } else if (this._status == MatchStatus.STARTING) {
+                this._playersToGo++;
+                this._status = MatchStatus.WAITING_PLAYERS;
+            }
+        }
     }
 
 
@@ -168,9 +211,9 @@ module.exports = class TTMatch {
 
         this._board[y][x] = {player, card, x, y};
         player.removeCardFromHand(card);
-
-        cardPlayed(x, y);
         
+        this.cardPlayed(x, y);
+
         var cellToCheck = null;
 
         //NMBERS: top, left, right, bottom.
@@ -179,7 +222,7 @@ module.exports = class TTMatch {
             cellToCheck = this._board[y][x-1];
 
             if (cellToCheck.card.numbers[2] < card.numbers[1]) {
-                flipCard(cellToCheck, player);
+                this.flipCard(cellToCheck, player);
             }
         }
 
@@ -187,7 +230,7 @@ module.exports = class TTMatch {
             cellToCheck = this._board[y][x+1];
 
             if (cellToCheck.card.numbers[1] < card.numbers[2]) {
-                flipCard(cellToCheck, player);
+                this.flipCard(cellToCheck, player);
             }
         }
 
@@ -195,7 +238,7 @@ module.exports = class TTMatch {
             cellToCheck = this._board[y-1][x];
 
             if (cellToCheck.card.numbers[3] < card.numbers[0]) {
-                flipCard(cellToCheck, player);
+                this.flipCard(cellToCheck, player);
             }
         }
 
@@ -203,7 +246,7 @@ module.exports = class TTMatch {
             cellToCheck = this._board[y+1][x];
 
             if (cellToCheck.card.numbers[0] < card.numbers[3]) {
-                flipCard(cellToCheck, player);
+                this.flipCard(cellToCheck, player);
             }
         }
 
@@ -214,17 +257,116 @@ module.exports = class TTMatch {
         for (var i = 0; i < this._playersIds.length; i++) {
             this._players[this._playersIds[i]].cardPlayed(x, y, cell.player.id, cell.card); 
         }
+        this._cardsInGame++;
 
         //TODO check for end of game
-        this.changeTurn();
+        if (this._cardsInGame == MAX_CARDS_IN_GAME) {
+            this.gameOver();
+        }
+        else {
+            this.changeTurn();
+        }
     }
 
     flipCard(cell, newPlayer) {
         var oldPlayer = cell.player;
-        oldPlayer.lostCard(cell.card, x, y);
+        this.decPlayerScore(oldPlayer);
         cell.player = newPlayer;
-        newPlayer.gainCard(cell.card, x, y);
+        this.incPlayerScore(newPlayer);
+        
+        for (var i = 0; i < this._playersIds.length; i++) {
+            this._players[this._playersIds[i]].flipCard(cell.x, cell.y, oldplayer.id, newPlayer.id); 
+        }
+
     }
+
+    decPlayerScore(player) {
+        player.score--;
+    }
+
+    incPlayerScore(player) {
+        player.score++;
+    }
+
+    gameOver() {
+        this._status = MatchStatus.RESULTS;
+        
+        var winners =  this._players.sort((a, b) => a.score - b.score);
+
+        var tie = [];
+        var flag= true;
+        var winnerScore = 0;
+        for (var i = 0; i < winners.length; i++){
+            var winner = winners[í];
+            if (tie.length == 0) {
+                tie.push(winner);
+                winnerScore = winner.score;
+            } else if (winner.score == winnerScore) {
+                tie.push(winner);
+            } else {
+                break;
+            }
+        }
+
+        switch (tie.length) {
+            case 0:
+                this.finish(); //NO ONE WINS
+                break;
+            case 1:
+                this.victory(tie[0]);
+                break;
+            default:
+                this.tie(tie);
+                break;
+        }
+
+
+        switch (this._type) {
+            case 'tutorial':
+                this.finish();
+                break;
+        }
+
+    }
+
+    getPlayerCardsOnBoard(player) {
+        var res = [];
+        for (var y = 0; y < 3; y++) {
+            for (var x = 0; x < 3; x++) {
+                if (this._board[y][x].player.id == player.id) {
+                    res.push(this._board[y][x].card);
+                }
+            }
+        }
+        return res;
+    }
+
+    victory(player) {
+   
+
+        player.victory(this.getPlayerCardsOnBoard(player));
+
+     
+        for (var i = 0; i < this._playersIds.length; i++) {
+            var playerId = this._playersIds[i]; 
+            if (playerId != player.id) {
+                this._players[playerId].lost(player.id);
+            }
+        }        
+    }
+    
+    tie (players) {
+        playersIds = players.map(function(e) { return e.id});
+        for (var i = 0; i < this._playersIds.length; i++) {
+            var player = this._players[this._playersIds[i]]; 
+            if (players.find(function(el, ix) {return el.id == player.id;}) >= 0) {
+                player.tie(playersIds, this.getPlayerCardsOnBoard(player));
+            } else {
+                player.lost(playersIds);
+            }
+        }    
+    }
+
 }
 
 

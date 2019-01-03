@@ -15,7 +15,7 @@ module.exports = class TTNPC extends TTPlayer{
         this._match.playerStarted(this._id);
     }
 
-    reqCards() {
+    reqCards(count) {
         //TODO criar as cartas
         this.setCards([
             {
@@ -71,12 +71,44 @@ module.exports = class TTNPC extends TTPlayer{
     }
 
 
-    lostCard(card, x, y) {
-        //TODO update my own internal board
+    lostCard(x, y){
+
     }
 
-    gainCard(card, x, y) {
-        //TODO update my own internal board
+    ganiedCard(x, y){
+
     }
+
+    flipCard(x, y, from, to) {
+        if (from == this._id) {
+            lostCard(x, y);
+        } else if (to == this._id) {
+            gainedCard(x,y);
+        } else {
+            //do nothing
+        }
+
+   }
+
+   sendMessage(msg, data){
+    //do nothing
+    }
+
+   abandoned() {
+       //DO NOTHING
+   }
+
+    victory(myCards) {
+    
+    }
+
+    lost(winnerId) {
+        
+    }
+
+    tie(players, myCards) {
+        
+    }
+
 
 }
