@@ -35,6 +35,7 @@ var TTSocket = function(){
 
     var start = function(op, userid) {
         options = op;
+        
         window.WebSocket = window.WebSocket || window.MozWebSocket;
         connection = new WebSocket(`ws://127.0.0.1:8081?userid=${userid}`); //TODO get real addr
 
@@ -109,21 +110,23 @@ var TTSocketPlay = function() {
     }
 
     function disableMoveMyCards() {
-        //TODO
+        console.log('disable cards');
     }
 
     function otherTurn() {
         //show message
         disableMoveMyCards();
+        console.log('show other  turn');
     }
 
     function enableMoveMyCards() {
-
+        console.log('enable cards');
     }
 
     function myTurn() {
         //show message
         enableMoveMyCards();
+        console.log('show my turn');
     }
 
     function flipCard(x, y, toMe) {
@@ -131,7 +134,7 @@ var TTSocketPlay = function() {
     }
 
     function updateScore() {
-        //TODO
+        console.log('update score '+ matchData.otherScore + 'x' + matchData.myScore );
     }
 
     function lostACard(x, y) {
@@ -171,6 +174,24 @@ var TTSocketPlay = function() {
         sendMessage("ready", {});
     }
 
+    function matchIsAboutToStart(players) {
+        if (options && options.startMatch) {
+
+            var opponent  = null;
+            for (var i = 0; i < players.length; i++) {
+                if (players[i].id != userid) {
+                    opponent = players[i];
+                    break;
+                }
+            }
+
+            options.startMatch(matchData.cards, opponent);
+        }
+        userid
+                
+            
+    }
+
     function checkMsg(msg) {
         switch(msg.header.msg) {
             case "cardsReq":
@@ -182,12 +203,7 @@ var TTSocketPlay = function() {
                 break;
                 
             case "startMatch":
-                if (options && options.startMatch) {
-                    options.startMatch(matchData.cards);
-                    //TODO arrumar isso aqui:
-                    
-                }
-                
+                matchIsAboutToStart(msg.data)    ;
                 break;
 
             case "score":

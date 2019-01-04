@@ -1,7 +1,74 @@
 <link rel="stylesheet" type="text/css" href="/css/board.css">
 
 <div class="match-board">
-    <div class="match-board__board"></div>
+    
+    <div class="match-board__opponent">
+        <div class="match-board__header__opponent__name">
+            <span></span>
+        </div>
+        <div class="match-board__header__opponent__cards">
+            <ul>
+                <li class="card-face-down oppennt-card">
+                    {{> CardFaceDown}}
+                
+                <li class="card-face-down oppennt-card">
+                    {{> CardFaceDown}}
+                
+                <li class="card-face-down oppennt-card">
+                    {{> CardFaceDown}}
+                
+                <li class="card-face-down oppennt-card">
+                    {{> CardFaceDown}}
+                
+                <li class="card-face-down oppennt-card">
+                    {{> CardFaceDown}}
+                
+            </ul>
+        </div>
+    </div>
+
+    <div class="match-board__center">
+        <div class="match-board__center__score">
+            <div class="score__opponent-score">
+                <span>5</span>
+            </div>
+            <div class="score__cross-sign">
+                <i class="fa fa-times fa-lg"></i>
+            </div>
+            <div class="score__my-score">
+                <span>5</span>
+            </div>
+        </div>
+        
+        <div class="match-board__field">
+            <ul>
+                <li data-y="0" data-x="0"></li>
+                <li data-y="0" data-x="1"></li>
+                <li data-y="0" data-x="2"></li>
+
+                <li data-y="1" data-x="0"></li>
+                <li data-y="1" data-x="1"></li>
+                <li data-y="1" data-x="2"></li>
+
+                <li data-y="2" data-x="0"></li>
+                <li data-y="2" data-x="1"></li>
+                <li data-y="2" data-x="2"></li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="match-board__me">
+        <div class="match-board__header__me__name">
+            <span></span>
+        </div>
+        <div class="match-board__header__me__cards">
+           <ul>
+                
+            </ul>
+        </div>
+    </div>
+
     
 </div>
 

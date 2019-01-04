@@ -64,6 +64,10 @@ class TTPlayer {
         this._timeout = val;
     }
 
+    get name() {
+        return this._data.session.user.nickname;
+    }
+
 
     reqCards(count) {
         if (this._cards.length < count) {
@@ -162,8 +166,8 @@ class TTPlayer {
 
     }
 
-    startMatch() {
-        this.sendMessage("startMatch", "");
+    startMatch(players) {
+        this.sendMessage("startMatch", players);
     }
 
     matchFinished() {

@@ -219,6 +219,9 @@ card:{
     }
 
 
+    get name() {
+        return this._match.type;
+    }
 }
 
 module.exports = {TTNPC:TTNPC};

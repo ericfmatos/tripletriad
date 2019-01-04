@@ -17,3 +17,15 @@
 .card-deck--ffviii .border{
     background-color: #F3F4F8;
 }
+
+.deck .card {
+    -webkit-box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    box-shadow: 3px 3px 7px rgba(0,0,0,0.3);
+    margin: 4px;
+}
+
+
+.deck .card.toggled {
+    outline: 2px solid blue;
+    top: -4px;
+}

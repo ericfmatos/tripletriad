@@ -1,5 +1,112 @@
-.match-board__board {
+/*.match-board__board {
     height: 576px;
     width: 1024px;
     background: url('../img/board.jpg');
+}*/
+
+
+.modal-nosize {
+    width: 980px;
+    height: auto;
+    min-width: 0 !important;
+    margin: 20px auto;
+
+
 }
+
+.modal-nosize .modal-body {
+    padding: 0;
+}
+
+.modal-nosize .modal-content{
+    border: none;
+    border-radius: 0;
+}
+
+.match-board {
+    background-image: radial-gradient(circle, #f7e8d2, #e9d1b0, #dbb98f, #cea26f, #c08b51);
+
+}
+
+.match-board__opponent,
+.match-board__me{
+    width: 260px;
+}
+
+.match-board__header__opponent__name,
+.match-board__header__me__name {
+    font-weight: bold;
+    max-width: 260px;    
+    text-align: center;
+    vertical-align: bottom;
+    line-height: 80px;
+    height: 80px;
+    color: white;
+}
+
+.match-board__opponent,
+.match-board__center,
+.match-board__me{
+    display: table-cell;
+    vertical-align: top;
+}
+
+
+.match-board__center__score {
+    height: 80px;
+    width: 450px;
+    color: white;
+}
+
+.match-board__field {
+    background: url('../img/field.png');
+    background-size: 450px;
+    width: 450px;
+}
+
+.match-board ul{
+    list-style: none;
+    padding: 0;
+}
+
+.match-board ul li {
+    display: inline-flex;
+
+}
+
+.match-board__field li {
+    width: 120px;
+    height: 180px;
+    margin: 13px;
+}
+
+.match-board__center__score {
+    text-align: center;
+}
+
+.score__cross-sign {
+    margin: 0 16px;
+}
+
+.score__opponent-score, .score__my-score {
+    font-weight: bold;
+    font-size: 4em;
+    font-family: "Times New Roman"    ;
+    text-shadow:rgb(0, 0, 0) 2px 0px 0px, rgb(0, 0, 0) 1.75517px 0.958851px 0px, rgb(0, 0, 0) 1.0806px 1.68294px 0px, rgb(0, 0, 0) 0.141474px 1.99499px 0px, rgb(0, 0, 0) -0.832294px 1.81859px 0px, rgb(0, 0, 0) -1.60229px 1.19694px 0px, rgb(0, 0, 0) -1.97998px 0.28224px 0px, rgb(0, 0, 0) -1.87291px -0.701566px 0px, rgb(0, 0, 0) -1.30729px -1.5136px 0px, rgb(0, 0, 0) -0.421592px -1.95506px 0px, rgb(0, 0, 0) 0.567324px -1.91785px 0px, rgb(0, 0, 0) 1.41734px -1.41108px 0px, rgb(0, 0, 0) 1.92034px -0.558831px 0px;
+    text-size-adjust:100%;
+}
+
+.match-board__center__score > * {
+    display: inline-block;
+    
+}
+
+.fa-times {
+    color: black;
+}
+
+.match-board__header__opponent__cards ul,
+.match-board__header__me__cards  ul {
+    text-align: center;
+}
+

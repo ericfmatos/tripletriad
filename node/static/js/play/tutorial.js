@@ -62,14 +62,25 @@ var TutorialHandler = function() {
         
     }
 
-    function startMatch(cards) {
+    function startMatch(cards, opponent) {
         console.log("chegou onde tinha que chegar");
+        var _cards = cards;
         $('.modal-body').load('/play/board',function(){
             elements.modalBoard.on('shown.bs.modal', function(){
                 socket.playerIsReady();
+                console.log(_cards);
+                var ulD = $(".match-board__header__me__cards ul");
+
+                for (var i = 0; i < _cards.length; i++) {
+                    var newCard = $(_cards[i]).clone();
+                    newCard.removeClass("toggled");
+                    var cl = $("<li>").append(newCard);
+                    ulD.append(cl);
+                }
+
             });
 
-            
+            $(".match-board__header__opponent__name span").text(opponent.name);
             elements.modalBoard.modal({show:true, backdrop: 'static', keyboard:false});
             //posicionar as cartas
 

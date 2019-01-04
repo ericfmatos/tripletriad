@@ -65,7 +65,15 @@ class TTMatch {
         
 
         if (this._playersToGo == 0) {
-            this.startMatch();
+
+            var players = [];
+
+            for (var i = 0; i < this._playersIds.length; i++) {
+                var player = this._players[this._playersIds[i]];
+                players.push({id: player.id, name: player.name})
+            }
+
+            this.startMatch(players);
         }
     }
 
@@ -88,7 +96,7 @@ class TTMatch {
         return setTimeout(function(x){ me.whenTimedOut(i); }, TIMEOUT);
     }
 
-    startMatch() {
+    startMatch(players) {
         this._turn = 0;
         this._turnPlayerId = null;
         this._status = MatchStatus.STARTING;
@@ -98,7 +106,7 @@ class TTMatch {
         for (var i = 0; i < this._playersIds.length; i++) {
             var player = this._players[this._playersIds[i]];
             player.timeout = this.setTimeout(i);
-            player.startMatch();
+            player.startMatch(players);
         } 
 
         
@@ -146,12 +154,13 @@ class TTMatch {
         this._status = MatchStatus.FINISHED;
         for (var i = 0; i < this._playersIds.length; i++) {
             var player = this._players[this._playersIds[i]];
-            if (player.timeout) {
-                clearTimeout(player.timeout);
-                player.timeout = null;
+            if (player) {
+                if (player.timeout) {
+                    clearTimeout(player.timeout);
+                    player.timeout = null;
+                }
+                player.matchFinished();
             }
-            player.matchFinished();
-            
         }
     }
 
