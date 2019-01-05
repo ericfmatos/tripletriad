@@ -74,9 +74,9 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'static')));
 
-var httpServer = http.createServer(app).listen(app.get('port'), function(){
+var httpServer = http.createServer(app);/*.listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
-});
+});*/
 
 const _passport = require('./config/passport')(passport);
 app.use(passport.initialize());
@@ -84,5 +84,14 @@ app.use(passport.session());
 // send app to router
 
 
-require('./router')(app, passport);
-require('./websocket')(app, httpServer );
+
+
+module.exports = {
+  app: app,
+
+  start: function() {
+    require('./router')(app, passport);
+    require('./websocket')(app, httpServer );
+
+  }
+}

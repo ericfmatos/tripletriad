@@ -18,7 +18,8 @@ module.exports = function(app, passport){
 
     //var authPassport = require('/config/passport')(passport);
     // Main Routes
-     
+    
+
     app.get('/', HomeController.Index);
     
     app.get('/home', isLoggedIn,  HomeController.Home);
@@ -38,7 +39,7 @@ module.exports = function(app, passport){
             req.session.destroy();
         }
         
-        res.redirect('/');
+        res.redirect('./');
     });
 
 
@@ -64,7 +65,7 @@ module.exports = function(app, passport){
 
 
     
-    routerFolder = '/play/';
+    routerFolder = '/';
     app.get(routerFolder +'board', isLoggedIn, PlayController.Board);
     app.get(routerFolder +'tutorial', isLoggedIn, PlayController.Tutorial);
 
@@ -74,12 +75,13 @@ module.exports = function(app, passport){
     // send to google to do the authentication
     // profile gets us their basic information including their name
     // email gets their emails
-    app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    app.get('/auth/google',
+     passport.authenticate('google', { scope : ['profile', 'email'] }));
     
     // the callback after google has authenticated the user
     app.get('/auth/google/callback',
             passport.authenticate('google', {
-                    successRedirect : '/home',
+                    successRedirect : '/tripletriad/home',
                     failureRedirect : '/'
             }));
     
@@ -95,7 +97,7 @@ module.exports = function(app, passport){
             return next();
 
         // if they aren't redirect them to the home page
-        res.redirect('/');
+        res.redirect('./');
     }
     
 

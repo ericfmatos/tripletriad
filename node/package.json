@@ -12,6 +12,7 @@
         "pg": "*",
         "body-parser": "*",
         "fs": "*",
-        "websocket": "*"
+        "websocket": "*",
+        "ws": "*"
     }
 }

@@ -1,41 +1,24 @@
 module.exports = function(app, httpServer){
     var http = require('http');
-
-    var port = 58082;
     var logger = require('./core/logger');
-    var webSocketServer = require('websocket').server;
+    var WebSocketServer = require('websocket').server;
     var passport = require('passport');
     var SessionHandler= require('./session-control');
-
     var TTWebSocket = require('./websockets/tt');
 
-
-    /*var httpServer = http.createServer(function(request, response) {
-        // Not important for us. We're writing WebSocket server,
-        // not HTTP server
-        console.log((new Date()) + ' Received request for ' + request.url);
-        response.writeHead(404);
-        response.end();
+    var config = require('./config/server');
+    var server = http.createServer(function(request, response) {
+        // process HTTP request. Since we're writing just WebSockets
+        // server we don't have to implement anything.
       });
+      server.listen(config.webSocket.port, function() { }); //TODO read from config
 
-    httpServer.listen(port, function() {
-        console.log("web socket Server is listening on port "+ port);
-    });*/
-
-    var wsServer = new webSocketServer({
-        httpServer: httpServer,
-        autoAcceptConnections: false
+    var wsServer = new WebSocketServer({
+        httpServer: server
     });
-
-
-
-
-     clients = {};
 
     
     function originIsAllowed(origin, userid) {
-    // put logic here to detect whether the specified origin is allowed.
-
         return SessionHandler.findSession(userid);
     }
 
@@ -105,7 +88,6 @@ module.exports = function(app, httpServer){
         
         var sessionData = { socket: this, connection, session };
 
-        //clients.push(connection) - 1;
         console.log((new Date()) + ' Connection accepted.');
         // user sent some message
     
@@ -132,9 +114,6 @@ module.exports = function(app, httpServer){
             console.log((new Date()) + " Peer "
                 + connection.remoteAddress + " disconnected.");
             // remove user from the list of connected clients
-            //clients.splice(index, 1);
-
-
             
             if (sessionData) {
                 switch (sessionData.protocol) {

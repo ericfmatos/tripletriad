@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
-     <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.css">
-     <link rel="stylesheet" type="text/css" href="/node_modules/font-awesome/css/font-awesome.css">
-     <link rel="stylesheet" type="text/css" href="/css/banner.css">
-     <link rel="stylesheet" type="text/css" href="/css/main.css">
+     <link rel="stylesheet" type="text/css" href="./node_modules/bootstrap/dist/css/bootstrap.css">
+     <link rel="stylesheet" type="text/css" href="./node_modules/font-awesome/css/font-awesome.css">
+     <link rel="stylesheet" type="text/css" href="./css/banner.css">
+     <link rel="stylesheet" type="text/css" href="./css/main.css">
           
-    <script src="/node_modules/jquery/dist/jquery.js"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="/js/banner.js"></script>
+    <script src="./node_modules/jquery/dist/jquery.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="./js/banner.js"></script>
 </head>
 <body>
     <header>
-      <a href="/home"><img class="logo" src="/img/triade_tripla.png" /><span class="version">v1.0 beta</span></a></header>
+      <a href="./home"><img class="logo" src="./img/triade_tripla.png" /><span class="version">v1.0 beta</span></a></header>
 
     {{#if formData.user}}
     
@@ -24,7 +24,7 @@
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{formData.user.nickname}}  <img class="pull-right img-profile" src="{{formData.user.profile_photo_url}}"> </a>
     <ul class="dropdown-menu">
-      <li><a href="/profile">{{profile}} <span class="glyphicon glyphicon-user pull-right"></span></a></li>
+      <li><a href="./profile">{{profile}} <span class="glyphicon glyphicon-user pull-right"></span></a></li>
       <li><a href="#">{{settings}} <span class="glyphicon glyphicon-cog pull-right"></span></a></li>
       <li><a href="#">{{status}} <span class="glyphicon glyphicon-stats pull-right"></span></a></li>
       <li><a href="#">{{notifications}} <span class="badge pull-right" id="user_notifications"> 0 </span></a></li>
@@ -32,14 +32,14 @@
       <li><a href="#">{{level}} <span class="badge pull-right"> {{formData.user.current_level}} </span></a></li>
       <li><a href="#">{{points}} <span class="badge pull-right"> {{formData.user.current_point}} </span></a></li>
       <li class="divider"></li>
-      <li><a href="/logout">{{logout}} <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
+      <li><a href="./logout">{{logout}} <span class="glyphicon glyphicon-log-out pull-right"></span></a></li>
     </ul>
   </li>
 </ul>
     
-    <script src="/js/customPopup.js"></script>
-    <script src="/js/alerts.js"></script>
-    <script src="/js/notifications.js"></script>
+    <script src="./js/customPopup.js"></script>
+    <script src="./js/alerts.js"></script>
+    <script src="./js/notifications.js"></script>
     {{/if}}
 
   <div class="content">
@@ -48,8 +48,8 @@
 
 
 
-    <footer><img class="dev" src="/img/duvaldev.png"></footer>
+    <footer><img class="dev" src="./img/duvaldev.png"></footer>
 
-    <script src="/js/common.js"></script>
+    <script src="./js/common.js"></script>
 </body>
 </html>

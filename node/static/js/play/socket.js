@@ -33,11 +33,12 @@ var TTSocket = function(){
 
 
 
-    var start = function(op, userid) {
+    var start = function(url, op, userid) {
         options = op;
         
         window.WebSocket = window.WebSocket || window.MozWebSocket;
-        connection = new WebSocket(`ws://127.0.0.1:8081?userid=${userid}`); //TODO get real addr
+        //connection = new WebSocket(`ws://127.0.0.1:8082?userid=${userid}`); //TODO get real addr
+        connection = new WebSocket(`${url}?userid=${userid}`); //TODO get real addr
 
         connection.onopen = function () {
             // connection is opened and ready to use
@@ -75,7 +76,9 @@ var TTSocket = function(){
 
 var TTSocketPlay = function() {
 
+    
     var userid = $("#userId").data("id");
+    var wsUrl = $("#wsConn").data("url");
 
     var matchData = {
         myScore : 5,
@@ -256,7 +259,9 @@ var TTSocketPlay = function() {
         options = _options;
 
         mainSocket = TTSocket();
-        mainSocket.start({
+        mainSocket.start(
+            wsUrl,
+            {
             onConnectionOpen: function() {
                 sendMessage("start", "tutorial");
             },

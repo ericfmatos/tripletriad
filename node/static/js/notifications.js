@@ -31,7 +31,7 @@ var NotificationHandler = function() {
     }
 
     var getMyUpdates =  function () {
-        $.get('/notification/updates', function(data, status) {
+        $.get('./notification/updates', function(data, status) {
             var showPopup = null;
             if (data) {
                 elements.user_notifications.text(data.length);
@@ -74,7 +74,7 @@ var NotificationHandler = function() {
     }
 
     function setNotificationRead (notificationId) {
-        $.post('/notification/setRead',
+        $.post('./notification/setRead',
             {notificationId},
             function(data, status) {
                 console.log(data);

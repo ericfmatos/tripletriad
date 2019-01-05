@@ -65,7 +65,7 @@ var TutorialHandler = function() {
     function startMatch(cards, opponent) {
         console.log("chegou onde tinha que chegar");
         var _cards = cards;
-        $('.modal-body').load('/play/board',function(){
+        $('.modal-body').load('./board',function(){
             elements.modalBoard.on('shown.bs.modal', function(){
                 socket.playerIsReady();
                 console.log(_cards);

@@ -1,6 +1,20 @@
+var config = require('../../config/server');
+
 var register = function(Handlebars) {
     var helpers = {
     
+        serverConfig: function(key) {
+            var keyLevel = key.split('.');
+            var res = config;
+            for (var i = 0; i < keyLevel.length; i++) {
+                var k = keyLevel[i];
+                if (res[k]) {
+                    res = res[k];
+                }
+            }
+            return res;
+        },
+
         cardRank: function(rank) {
             if (rank < 10) {
                 return rank

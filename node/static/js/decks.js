@@ -10,7 +10,7 @@ Decks = function() {
     function showDeck(deckData, deckid) {
         
 
-        $.get('/cards/listMyCardsFromDeck?deckid=' + deckid, function(data, status) {
+        $.get('./cards/listMyCardsFromDeck?deckid=' + deckid, function(data, status) {
             if (data) {
 
                 deckData.html(data);

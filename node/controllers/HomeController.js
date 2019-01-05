@@ -104,7 +104,7 @@ exports.SaveUser = function(request, response) {
         },
         data => { 
             request.session.passport.user = data;
-            response.redirect('/home');
+            response.redirect('./home');
             if (isNew) {
 
                 var texts = languageController.loadRes('../resources/newUser.res', data.language, data.gender, data) ;
