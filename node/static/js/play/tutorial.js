@@ -53,11 +53,13 @@ var TutorialHandler = function() {
             elements.startGame.removeClass("hidden");
             banners.initial.hide();
             banners.play.show();
+            elements.handTrail.addClass("hidden");
         }
         else {
             elements.startGame.addClass("hidden");
             banners.initial.show();
             banners.play.hide();
+            elements.handTrail.removeClass("hidden");
         }
         
     }

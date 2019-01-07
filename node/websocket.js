@@ -112,7 +112,7 @@ module.exports = function(app, httpServer){
         // user disconnected
         connection.on('close', function(connection) {
             console.log((new Date()) + " Peer "
-                + connection.remoteAddress + " disconnected.");
+                + connection.origin + " disconnected.");
             // remove user from the list of connected clients
             
             if (sessionData) {

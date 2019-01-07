@@ -5,6 +5,10 @@
     color: white;
 }
 
+.deck__title {
+    display: table-cell;
+}
+
 .deck--ffviii .deck__data {
     border-bottom-color: #2E4271;
 }

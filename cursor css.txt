@@ -1,5 +1,5 @@
  <div class="hand-trail">
-    <i class="far fa-hand-point-left fa-lg"></i>
+    <i class="fa fa-hand-o-left fa-lg"></i>
   </div>
 
 
@@ -9,8 +9,8 @@
   overflow: hidden;
 }
 
-.fa-hand-point-left {
-  position: absolute;
+.fa-hand-o-left {
+  position: relative;
   left: 0;
   display: block;
  

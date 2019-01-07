@@ -40,7 +40,8 @@ ul.decks .deck__data {
 .card-counter {
     font-size: 0.8em;
     font-style: italic;
-    margin-left: 12px;
+    display: table-cell;
+    padding-left: 12px;
 }
 
 .user-may-start  {
@@ -56,13 +57,15 @@ ul.cards {
 
 .hand-trail {
     overflow: hidden;
+    display: table-cell;
+    width: 32px;
   }
   
-  .fa-hand-point-left {
-    position: absolute;
+  .hand-trail i {
+    position: relative;
     left: 0;
     display: block;
-   
+    font-size: 1.6em;
     x-transition: all 1s ease-in-out;
     animation: ani 1s infinite;
   }
